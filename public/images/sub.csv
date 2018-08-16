@@ -1,0 +1,68 @@
+1,1,Assault Rifle
+2,1,Assault Carbine
+3,1,Submachine Gun
+4,1,Shotgun
+5,1,Designated Marksman Rifle
+6,1,Sniper Rifle
+7,1,Pistol
+8,1,Melee
+9,1,Fragmentation Grenade
+10,1,Smoke Grenade
+11,1,Stun Grenade
+12,2,Mount
+13,2,Armor
+14,2,Vanity
+15,3,Armor
+16,3,Vanity
+17,4,Eyewear
+18,5,Earpieces
+19,6,Armored
+20,6,Unarmored
+21,7,Body Armor
+22,8,Backpack
+23,9,Secure
+24,10,Armband
+25,11,12x70mm
+26,11,20x70mm
+27,11,7.62x25mm Tokarev
+28,11,9x18mm Makarov
+29,11,9x19 Parabellum
+30,11,9x21 Gyurza
+31,11,5.45x39mm
+32,11,5.56x45mm NATO
+33,11,7.62x39mm
+34,11,7.62x51mm NATO
+35,11,7.62x54R
+36,11,9x39mm
+37,11,.366 TKM
+38,12,Bipod
+39,12,Flashlight
+40,12,Foregrip
+41,12,Gas Block
+42,12,Tactical Device
+43,12,Auxiliary
+44,12,Compensator
+45,12,Flash Hider
+46,12,Muzzle Device
+47,12,Precision Mounting System
+48,12,Silencer
+49,12,Assault Scope
+50,12,Reflex Sight
+51,12,Compact Reflex Sight
+52,12,Ironsight
+53,12,Scope
+54,12,Special Scope
+55,12,Charging Handle
+56,12,Grenade Launcher
+57,12,Magazine
+58,12,Mount
+59,12,Stock
+60,12,Barrel
+61,12,Handguard
+62,12,Pistol Grip
+63,12,Receiver
+64,13,Medical
+65,14,Consumables
+66,15,Loot
+67,16,Key
+68,17,Container
