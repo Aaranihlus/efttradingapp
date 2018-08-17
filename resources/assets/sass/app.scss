@@ -19,7 +19,6 @@
 }
 
 .itembox {
-  background-color: #353a3f;
   text-align: center;
   border:1px solid #212529;
   width:100%;
@@ -30,5 +29,9 @@
 }
 
 p {
-  color:white;
+  //color:white;
+}
+
+html, .container-fluid, .itembox {
+  //background-color: #353a3f;
 }

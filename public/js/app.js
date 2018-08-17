@@ -10451,13 +10451,14 @@ __webpack_require__(3);
 window.toastr = __webpack_require__(6);
 
 //Get Main Categories on Page Load
-$(document).ready(function () {
+
+if ($('#MainCategories').length) {
   $.getJSON('/items/main', function (response) {
     $.each(response, function (k, v) {
       $('#MainCategories').append('<button class="btn btn-primary" data-type="' + v + '">' + v.replace('_', ' ') + '</button>');
     });
   });
-});
+};
 
 //When a main category is clicked, get its sub categories
 $("#MainCategories").on("click", "button", function () {

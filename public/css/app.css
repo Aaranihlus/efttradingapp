@@ -21172,7 +21172,6 @@ button.toast-close-button {
 }
 
 .itembox {
-  background-color: #353a3f;
   text-align: center;
   border: 1px solid #212529;
   width: 100%;
@@ -21180,9 +21179,5 @@ button.toast-close-button {
 
 .btn {
   border-radius: 0;
-}
-
-p {
-  color: white;
 }
 

@@ -13,12 +13,17 @@ class ItemUser extends Model
 
   public function user()
   {
-    return $this->hasOne('App\User');
+    return $this->belongsTo('App\User');
   }
 
   public function item()
   {
-    return $this->hasOne('App\Item');
+    return $this->belongsTo('App\Item');
+  }
+
+  public function scopeItemUser($query)
+  {
+    return $query->with('user', 'item');
   }
 
 }

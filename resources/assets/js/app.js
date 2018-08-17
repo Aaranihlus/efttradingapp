@@ -3,7 +3,9 @@ require('bootstrap');
 window.toastr = require('toastr');
 
 //Get Main Categories on Page Load
-$( document ).ready(function() {
+
+if ($('#MainCategories').length )
+{
   $.getJSON('/items/main', function(response)
   {
     $.each(response, function(k, v) {
@@ -11,7 +13,7 @@ $( document ).ready(function() {
     })
   }
 );
-});
+};
 
 //When a main category is clicked, get its sub categories
 $( "#MainCategories" ).on( "click", "button", function() {
