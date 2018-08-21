@@ -12,9 +12,14 @@ class User extends Authenticatable
     protected $fillable = ['username', 'email', 'password'];
     protected $hidden = ['password', 'remember_token'];
 
-    public function items()
+    public function selling()
     {
-      return $this->hasMany('App\ItemUser');
+      return $this->hasMany('App\UserSelling')->with('item');
+    }
+
+    public function buying()
+    {
+      return $this->hasMany('App\UserBuying')->with('item');
     }
 
 }

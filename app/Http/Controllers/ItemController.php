@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Item;
+use App\UserBuying;
+use App\UserSelling;
+use Illuminate\Support\Facades\Cache;
 
 class ItemController extends Controller
 {
@@ -28,13 +31,25 @@ class ItemController extends Controller
     //Returns all main category names
     public function MainCategories()
     {
-       return Item::select('main_category')->distinct()->pluck('main_category');
+       return Cache::remember('all_main_categories', 60, function (){
+         return Item::distinct('main_category')->pluck('main_category');
+       });
     }
 
     //Returns all sub category names
     public function SubCategories()
     {
-      return Item::distinct('sub_category')->pluck('sub_category');
+      return Cache::remember('all_sub_categories', 60, function (){
+        return Item::distinct('sub_category')->pluck('sub_category');
+      });
+    }
+
+    //Returns item listings for a specific item id
+    public function ItemListings($id)
+    {
+      $sale_listings = UserSelling::ItemUser()->where('item_id', '=', $id)->orderBy('created_at', 'desc')->get();
+      $buy_listings = UserBuying::ItemUser()->where('item_id', '=', $id)->orderBy('created_at', 'desc')->get();
+      return view('item.show', compact('sale_listings', 'buy_listings'));
     }
 
 }

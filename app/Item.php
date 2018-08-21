@@ -8,7 +8,7 @@ class Item extends Model
 {
   public function user()
   {
-    return $this->belongsTo('App\User')->using('App\ItemUser');
+    return $this->belongsTo('App\User')->using('App\UserSelling');
   }
 
 

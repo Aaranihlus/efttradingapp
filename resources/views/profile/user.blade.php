@@ -3,43 +3,100 @@
 @section('content')
 <div class="container-fluid">
 
+  <br>
+
   <div class="row">
 
-    <div class="col-2 p-0" style="background-color:#6c757d; text-align:center;">
-      <div class="container-fluid p-0">
-        <p>{{ auth()->user()->username }}</p>
-        <p>Profile Picture</p>
-        <p>Completed Trades:</p>
-        <p>Rating:</p>
-      </div>
+    <div class="col-2">
+
+      <ul class="list-group text-center">
+        <li class="list-group-item">
+          <h2>{{ auth()->user()->username }}</h2>
+        </li>
+
+        <li class="list-group-item">
+          <p>Profile Picture</p>
+        </li>
+
+        <li class="list-group-item">
+          <p>Completed Trades:</p>
+        </li>
+
+        <li class="list-group-item">
+          <p>Rating:</p>
+        </li>
+      </ul>
     </div>
 
-    <div class="col-10 p-0" style="border-left: 1px solid #212529;">
+    <div class="col-2">
+      <ul class="list-group text-center">
+        <li class="list-group-item p-0">
+          <p>Items I am Buying<p>
+        </li>
+      </ul>
+    </div>
 
-      <div class="container-fluid p-0" id="MainCategories"></div>
-      <div class="container-fluid p-0" id="SubCategories"></div>
 
-      <div class="container-fluid" style="background-color:#353a3f">
-        <form method="POST" id="UpdateItemForm">
-          {{ csrf_field() }}
-          <input type="text" id="item_id" name="item_id" value="" hidden>
-        <div class="row">
-          <div class="col-4 itembox" id="SelectedItemInfo"></div>
-          <div class="col-3 itembox" id="ItemSellingPanel"></div>
-          <div class="col-3 itembox" id="ItemBuyingPanel"></div>
-          <div class="col-2 itembox">
-            <button class="btn btn-primary mx-auto" id="UpdateItemButton">Update Item</button>
+    <div class="col-2">
+      <ul class="list-group text-center">
+        <li class="list-group-item p-0">
+          <p>Items I am Selling<p>
+        </li>
+      </ul>
+    </div>
+
+
+
+
+
+    <div class="col-6">
+      <ul class="list-group text-center">
+        <li class="list-group-item p-0">
+          <div id="MainCategories"></div>
+        </li>
+
+
+        <li class="list-group-item p-0">
+          <div class="container-fluid" id="SubCategories"></div>
+        </li>
+
+
+        <li class="list-group-item p-0">
+
+          <div class="container-fluid">
+
+            <br>
+            <div class="row">
+              <div class="col-4" id="SelectedItemInfo"></div>
+
+              <div class="col-4">
+                <form method="POST" id="SellingForm">
+                  {{ csrf_field() }}
+                  <input class="form-control" type="text" id="item_id_s" name="item_id" value="" hidden>
+                  <div id="ItemSellingData"></div>
+                  <button class="btn btn-primary align-middle" id="UpdateSelling">Update Selling</button>
+                </form>
+              </div>
+
+              <div class="col-4">
+                <form method="POST" id="BuyingForm">
+                  {{ csrf_field() }}
+                  <input class="form-control" type="text" id="item_id_b" name="item_id" value="" hidden>
+                  <div id="ItemBuyingData"></div>
+                  <button class="btn btn-primary align-middle" id="UpdateBuying">Update Buying</button>
+                </form>
+              </div>
+
+            </div>
           </div>
-        </div>
-        </form>
-
-      </div>
+        </li>
 
 
-
-      <div class="container-fluid">
+        <li class="list-group-item">
           <div class="row" id="CategoryItems"></div>
-      </div>
+        </li>
+
+      </ul>
 
 
 
