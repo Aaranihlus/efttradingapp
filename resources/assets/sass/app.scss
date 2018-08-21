@@ -1,28 +1,29 @@
 
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
-
 // Variables
 @import 'variables';
-
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
-
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
-
 @import "~toastr/toastr.scss";
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+.bg-dark {
+    background-color: #000 !important;
 }
 
-.itembox {
-  background-color: #353a3f;
-  text-align: center;
-  border:1px solid #212529;
-  width:100%;
+.thin-border {
+  border:1px solid black;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+}
+
+.image-block {
+  width: 100%;
+  position:relative;
+  background:url() 50% 50% no-repeat;
+  min-height: 12vh;
+  background-size:cover;
+  border-radius: 8px;
 }
 
 .btn {
@@ -30,5 +31,12 @@
 }
 
 p {
-  color:white;
+  //color:white;
+}
+
+body {
+  //background-color: #353a3f;
+  background: url('../images/eftbackground.jpg');
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }

@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ItemUser extends Model
+class UserSelling extends Model
 {
-  protected $table = 'item_user';
-  protected $fillable = ['item_id', 'user_id', 'selling_currency', 'selling_price', 'selling_quantity', 'buying_currency', 'buying_price', 'buying_quantity'];
+  protected $table = 'user_selling';
+  protected $fillable = ['item_id', 'user_id', 'quantity', 'price', 'currency'];
   public $incrementing = false;
 
   public function user()
