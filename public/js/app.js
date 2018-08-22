@@ -10450,20 +10450,36 @@ window.$ = __webpack_require__(0);
 __webpack_require__(3);
 window.toastr = __webpack_require__(6);
 
+toastr.options = {
+  "closeButton": false,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": false,
+  "positionClass": "toast-bottom-right",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+};
+
 //Get Main Categories on Page Load
-$(document).ready(function () {
+if ($('#MainCategories').length) {
   $.getJSON('/items/main', function (response) {
     $.each(response, function (k, v) {
-      $('#MainCategories').append('<button class="btn btn-primary" data-type="' + v + '">' + v.replace('_', ' ') + '</button>');
+      $('#MainCategories').append('<button class="btn btn-secondary" data-type="' + v + '">' + v.replace('_', ' ') + '</button>');
     });
   });
-});
+};
 
 //When a main category is clicked, get its sub categories
 $("#MainCategories").on("click", "button", function () {
-
   $('#SubCategories').empty();
-
   $.getJSON('/items/bymain/' + $(this).data("type"), function (response) {
     $.each(response, function (k, v) {
       $('#SubCategories').append('<button class="btn btn-secondary" data-type="' + v + '">' + v.replace('_', ' ') + '</button>');
@@ -10473,55 +10489,77 @@ $("#MainCategories").on("click", "button", function () {
 
 //When a sub category is clicked, get its items
 $("#SubCategories").on("click", "button", function () {
-
   $('#CategoryItems').empty();
-
   $.getJSON('/items/subcat/' + $(this).data("type"), function (response) {
-    $.each(response, function (k, v) {
-      $('#CategoryItems').append('<div class="col-4 p-0 itembox" data-id="' + v.id + '"><p class="mx-auto">' + v.name + '</p><img class="mx-auto" src="../images/' + v.main_category + '/' + v.image + '"></div>');
-    });
+    if ($('#SelectedItemInfo').length == 0) {
+      $.each(response, function (k, v) {
+        $('#CategoryItems').append('<a class="col-4 mb-5" href="/item/' + v.id + '"><p class="text-center text-truncate">' + v.name + '</p><div class="image-block" style="background-image:url(../images/' + v.main_category + '/' + v.image + ');"></div></a>');
+      });
+    } else {
+      $.each(response, function (k, v) {
+        $('#CategoryItems').append('<div class="col-4 mb-5" data-id="' + v.id + '" href="/item/' + v.id + '"><p class="text-center">' + v.name + '</p><div class="image-block" style="background-image:url(../images/' + v.main_category + '/' + v.image + ');"></div></div>');
+      });
+    }
   });
 });
 
-$("#CategoryItems").on("click", ".itembox", function () {
-  var SelectedItemImg = $(this).find('img').attr('src');
+$("#CategoryItems").on("click", ".col-4", function () {
+  //$('#ItemPanel').show();
+
+  var SelectedItemImg = $(this).find('.image-block').css('background-image');
+  var ImgPath = SelectedItemImg.replace(/(?:^url\(["']?|["']?\)$)/g, "");
   var SelectedItemName = $(this).find('p').text();
   var SelectedItemId = $(this).data('id');
 
   $('#SelectedItemInfo').empty();
-  $('#ItemSellingPanel').empty();
-  $('#ItemBuyingPanel').empty();
+  $('#ItemSellingData').empty();
+  $('#ItemBuyingData').empty();
   $('#CategoryItems').empty();
 
-  $('#SelectedItemInfo').append('<div class="col-4 p-0" data-id="' + SelectedItemId + '"><p class="mx-auto">' + SelectedItemName + '</p><img class="mx-auto" src="' + SelectedItemImg + '"></div>');
+  $('#SelectedItemInfo').append('<div data-id="' + SelectedItemId + '"><p>' + SelectedItemName + '</p><img class="img-fluid" src="' + ImgPath + '"></div>');
 
-  $.getJSON('/items/user/' + SelectedItemId, function (response) {
-    $('#item_id').val(SelectedItemId);
-    $('#ItemSellingPanel').append('<p>Selling</p>\n                                     <input type="number" id="sellingqty" name="sellingqty"></input>\n                                     <p>for:</p>\n                                     <input type="number" id="sellingprice" name="sellingprice"></input>\n                                     <select name="sellingcurrency">\n                                        <option value="Roubles">Roubles</option>\n                                        <option value="Euros">Euros</option>\n                                        <option value="Dollars">Dollars</option>\n                                     </select>');
-    $('#ItemBuyingPanel').append('<p>Buying</p>\n                                   <input type="number" id="buyingqty" name="buyingqty"></input>\n                                   <p>for:</p>\n                                   <input type="number" id="buyingprice" name="buyingprice"></input>\n                                   <select name="buyingcurrency">\n                                      <option value="Roubles">Roubles</option>\n                                      <option value="Euros">Euros</option>\n                                      <option value="Dollars">Dollars</option>\n                                   </select>');
+  $('#item_id_s').val(SelectedItemId);
+  $('#item_id_b').val(SelectedItemId);
 
-    if (response[0]) {
-      $("#sellingqty").val(response[0].selling_quantity);
-      $("#sellingprice").val(response[0].selling_price);
-      $("#buyingqty").val(response[0].buying_quantity);
-      $("#buyingprice").val(response[0].buying_price);
-    } else {
-      $("#sellingqty").val(0);
-      $("#sellingprice").val(0);
-      $("#buyingqty").val(0);
-      $("#buyingprice").val(0);
+  $('#ItemSellingData').append('<p>Selling</p>\n                                 <input type="number" class="form-control" id="s_quantity" name="quantity"></input>\n                                 <p>for:</p>\n                                 <input class="form-control" type="number" id="s_price" name="price"></input>\n                                 <select class="form-control" id="s_currency" name="currency">\n                                    <option value="Roubles">Roubles</option>\n                                    <option value="Euros">Euros</option>\n                                    <option value="Dollars">Dollars</option>\n                                 </select>');
+
+  $('#ItemBuyingData').append('<p>Buying</p>\n                                  <input type="number" class="form-control" id="b_quantity" name="quantity"></input>\n                                  <p>for:</p>\n                                  <input class="form-control" type="number" id="b_price" name="price"></input>\n                                  <select class="form-control" id="b_currency" name="currency">\n                                     <option value="Roubles">Roubles</option>\n                                     <option value="Euros">Euros</option>\n                                     <option value="Dollars">Dollars</option>\n                                  </select>');
+
+  $.getJSON('/items/user/selling/' + SelectedItemId).done(function (response) {
+    $("#s_quantity").val(response[0].quantity);
+    $("#s_price").val(response[0].price);
+  });
+
+  $.getJSON('/items/user/buying/' + SelectedItemId).done(function (response) {
+    $("#b_quantity").val(response[0].quantity);
+    $("#b_price").val(response[0].price);
+  });
+});
+
+$('#UpdateBuying').on('click', function (e) {
+  e.preventDefault();
+  $.post("/user/update_buying", $("#BuyingForm").serialize(), function (response) {
+    if (response == "true") {
+      toastr.info('Buying Information Successfully Updated!');
     }
   });
 });
 
-$('#UpdateItemButton').on('click', function (e) {
+$('#UpdateSelling').on('click', function (e) {
   e.preventDefault();
-  $.post("/profile/items", $("#UpdateItemForm").serialize(), function (response) {
+  $.post("/user/update_selling", $("#SellingForm").serialize(), function (response) {
     if (response == "true") {
-      console.log('show flash message');
-      toastr.info('Are you the 6 fingered man?');
+      toastr.info('Selling Information Successfully Updated!');
     }
   });
+});
+
+$('#OfferModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget);
+  var recipient = button.data('whatever');
+  var modal = $(this);
+  modal.find('.modal-title').text('New message to ' + recipient);
+  modal.find('.modal-body input').val(recipient);
 });
 
 /***/ }),
