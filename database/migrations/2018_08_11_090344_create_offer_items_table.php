@@ -8,7 +8,8 @@ class CreateOfferItemsTable extends Migration
 {
   public function up()
   {
-    Schema::create('offer_items', function (Blueprint $table) {
+    Schema::create('offer_items', function (Blueprint $table)
+    {
       $table->increments('offer_id');
       $table->integer('item_id');
       $table->integer('quantity');
