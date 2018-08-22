@@ -6,7 +6,7 @@ Route::get('/', 'HomeController@index');
 
 Route::get('/offers', 'OfferController@index');
 Route::get('/offer/{offer}', 'OfferController@show');
-Route::get('/offer', 'OfferController@create');
+
 Route::post('/offer', 'OfferController@store');
 
 Route::get('/register', 'AuthController@register');
@@ -18,7 +18,7 @@ Route::get('/logout', 'AuthController@logout');
 //Returns All Items
 Route::get('/items/all', 'ItemController@AllItems');
 //Returns all Items in the specified sub category
-Route::get('/items/subcat/{sub_category}', 'ItemController@CategoryItems');
+Route::get('/items/subcat/{sub_category}/{main_category}', 'ItemController@CategoryItems');
 //returns all sub categories in specified main category
 Route::get('/items/bymain/{main_category}', 'ItemController@SubCategoriesByMainCategory');
 //Returns All main categories

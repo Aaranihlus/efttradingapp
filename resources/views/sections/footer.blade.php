@@ -71,26 +71,40 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="OfferModalLabel">Send an Offer</h5>
+        <h5 class="modal-title" id="OfferModalLabel"></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form>
+
+        <form id="OfferForm">
+          {{ csrf_field() }}
+          <input type="text" id="lister_id" name="lister_id" value="" hidden>
+          <input type="text" id="offer_item_id" name="offer_item_id" value="" hidden>
+
+          <select class="form-control" id="offer_currency" name="offer_currency">
+             <option value="Roubles">Roubles</option>
+             <option value="Euros">Euros</option>
+             <option value="Dollars">Dollars</option>
+          </select>
+
           <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Recipient:</label>
-            <input type="text" class="form-control" id="recipient-name">
+            <label for="offer_quantity" class="col-form-label" id="offer_quantity_label"></label>
+            <input type="number" min="1" max="1" class="form-control" id="offer_quantity">
           </div>
+
           <div class="form-group">
-            <label for="message-text" class="col-form-label">Message:</label>
-            <textarea class="form-control" id="message-text"></textarea>
+            <label for="offer_price" class="col-form-label" id="">Price Per Unit</label>
+            <input type="number" class="form-control" id="offer_price">
           </div>
         </form>
+
+
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Send message</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="SendOfferButton">Send Offer</button>
       </div>
     </div>
   </div>

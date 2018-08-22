@@ -58,8 +58,8 @@
               <p><a href="/profile/{{ $listing->user->username }}">{{ $listing->user->username }}</a> wants to buy {{ $listing->quantity }}x <a href="/item/{{ $listing->item->id }}">{{ $listing->item->name }}</a> for {{ $listing->price }} {{ $listing->currency }} each</p>
             </div>
             <div class="col-2">
-              <button class="btn btn-primary" data-name="{{ $listing->item->name }}" data-image="{{ $listing->item->image }}" data-price="{{ $listing->price }}"
-                      data-currency="{{ $listing->currency }}" data-quantity="{{ $listing->quantity }}" data-toggle="modal" data-target="#OfferModal" style="width:100%;">Sell
+              <button class="btn btn-primary" data-name="{{ $listing->item->name }}" data-image="{{ $listing->item->image }}" data-price="{{ $listing->price }}" data-lister="{{ $listing->user->id }}"
+                      data-currency="{{ $listing->currency }}" data-quantity="{{ $listing->quantity }}" data-item_id="{{ $listing->item->id }}" data-toggle="modal" data-target="#OfferModal" style="width:100%;">Sell
               </button>
             </div>
           </div>

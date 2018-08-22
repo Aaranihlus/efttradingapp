@@ -20,41 +20,55 @@ toastr.options = {
   "hideMethod": "fadeOut"
 };
 
+var selected_main_category = "";
+
 //Get Main Categories on Page Load
-if ($('#MainCategories').length ){
+if ($('#MainCategories').length )
+{
   $.getJSON('/items/main', function(response)
   {
     $.each(response, function(k, v)
     {
-      $('#MainCategories').append('<button class="btn btn-secondary" data-type="'+ v +'">' + v.replace('_', ' ') + '</button>');
+      $('#MainCategories').append('<button class="btn btn-primary" data-type="'+ v +'">' + v.replace('_', ' ') + '</button>');
     });
   });
 };
 
 //When a main category is clicked, get its sub categories
-$( "#MainCategories" ).on( "click", "button", function(){
+$( "#MainCategories" ).on( "click", "button", function(e)
+{
+  $('#SubCatHeader').show();
+  $('#SubCategoriesContainer').show();
+  selected_main_category = $(e.target).text();
+
   $('#SubCategories').empty();
-  $.getJSON('/items/bymain/' + $(this).data("type"), function(response){
-    $.each(response, function(k, v) {
-      $('#SubCategories').append('<button class="btn btn-secondary" data-type="'+ v +'">' + v.replace('_', ' ') + '</button>');
+  $.getJSON('/items/bymain/' + $(this).data("type"), function(response)
+  {
+    $.each(response, function(k, v)
+    {
+      $('#SubCategories').append('<button class="btn btn-primary" data-type="'+ v +'">' + v.replace('_', ' ') + '</button>');
     });
   });
 });
 
 //When a sub category is clicked, get its items
-$( "#SubCategories" ).on( "click", "button", function(){
+$( "#SubCategories" ).on( "click", "button", function()
+{
+  $('#CategoryItemsContainer').show();
   $('#CategoryItems').empty();
-  $.getJSON('/items/subcat/' + $(this).data("type"), function(response)
+  $.getJSON('/items/subcat/' + $(this).data("type") + '/' + selected_main_category.replace('%20', ' '), function(response)
   {
     if($('#SelectedItemInfo').length == 0)
     {
-      $.each(response, function(k, v) {
+      $.each(response, function(k, v)
+      {
         $('#CategoryItems').append('<a class="col-4 mb-5" href="/item/' + v.id + '"><p class="text-center text-truncate">' + v.name + '</p><div class="image-block" style="background-image:url(../images/' + v.main_category + '/' + v.image + ');"></div></a>');
       });
     }
     else
     {
-      $.each(response, function(k, v) {
+      $.each(response, function(k, v)
+      {
         $('#CategoryItems').append('<div class="col-4 mb-5" data-id="'+v.id+'" href="/item/' + v.id + '"><p class="text-center">' + v.name + '</p><div class="image-block" style="background-image:url(../images/' + v.main_category + '/' + v.image + ');"></div></div>');
       });
     }
@@ -64,8 +78,7 @@ $( "#SubCategories" ).on( "click", "button", function(){
 
 $( "#CategoryItems" ).on( "click", ".col-4", function()
 {
-  //$('#ItemPanel').show();
-
+  $('#SelectedItemContainer').show();
   var SelectedItemImg = $(this).find('.image-block').css('background-image');
   var ImgPath = SelectedItemImg.replace(/(?:^url\(["']?|["']?\)$)/g, "");
   var SelectedItemName = $(this).find('p').text();
@@ -101,32 +114,52 @@ $( "#CategoryItems" ).on( "click", ".col-4", function()
                                      <option value="Dollars">Dollars</option>
                                   </select>`);
 
-  $.getJSON('/items/user/selling/' + SelectedItemId).done(function(response){
-    $("#s_quantity").val(response[0].quantity);
-    $("#s_price").val(response[0].price);
+  $.getJSON('/items/user/selling/' + SelectedItemId).done(function(response)
+  {
+    if(response[0])
+    {
+      $("#s_quantity").val(response[0].quantity);
+      $("#s_price").val(response[0].price);
+    }else{
+      $("#s_quantity").val(0);
+      $("#s_price").val(0);
+    }
   });
 
-  $.getJSON('/items/user/buying/' + SelectedItemId).done(function(response){
-    $("#b_quantity").val(response[0].quantity);
-    $("#b_price").val(response[0].price);
+  $.getJSON('/items/user/buying/' + SelectedItemId).done(function(response)
+  {
+    if(response[0])
+    {
+      $("#b_quantity").val(response[0].quantity);
+      $("#b_price").val(response[0].price);
+    }else{
+      $("#b_quantity").val(0);
+      $("#b_price").val(0);
+    }
   });
 
 });
 
 
-$('#UpdateBuying').on('click', function(e){
+$('#UpdateBuying').on('click', function(e)
+{
   e.preventDefault();
-  $.post("/user/update_buying", $( "#BuyingForm" ).serialize(), function(response){
-    if(response == "true"){
+  $.post("/user/update_buying", $( "#BuyingForm" ).serialize(), function(response)
+  {
+    if(response == "true")
+    {
       toastr.info('Buying Information Successfully Updated!');
     }
   });
 });
 
-$('#UpdateSelling').on('click', function(e){
+$('#UpdateSelling').on('click', function(e)
+{
   e.preventDefault();
-  $.post("/user/update_selling", $( "#SellingForm" ).serialize(), function(response){
-    if(response == "true"){
+  $.post("/user/update_selling", $( "#SellingForm" ).serialize(), function(response)
+  {
+    if(response == "true")
+    {
       toastr.info('Selling Information Successfully Updated!');
     }
   });
@@ -134,10 +167,30 @@ $('#UpdateSelling').on('click', function(e){
 
 
 
-$('#OfferModal').on('show.bs.modal', function (event){
-  var button = $(event.relatedTarget)
-  var recipient = button.data('whatever')
-  var modal = $(this)
-  modal.find('.modal-title').text('New message to ' + recipient)
-  modal.find('.modal-body input').val(recipient)
+$('#OfferModal').on('show.bs.modal', function (event)
+{
+  var button = $(event.relatedTarget);
+  var modal = $(this);
+  modal.find('.modal-title').text(button.text() + button.data('name'));
+  modal.find('#offer_quantity_label').text('How many do you want to ' + button.text()+'?');
+  modal.find('#offer_quantity').val(1);
+  modal.find('#offer_quantity').attr('max', button.data('quantity'));
+  modal.find('#offer_price').val(button.data('price'));
+  modal.find('#lister_id').val(button.data('lister'));
+  modal.find('#offer_item_id').val(button.data('item_id'));
+});
+
+
+$('#SendOfferButton').on('click', function()
+{
+  $.post("/offer", { quantity: $('#offer_quantity').val(),
+                     price: $('#offer_price').val(),
+                     _token: $('input[name="_token"]').val(),
+                     lister_id: $('#lister_id').val(),
+                     currency: $('#offer_currency').val(),
+                     item_id: $('#offer_item_id').val(),
+                   }, function(response)
+  {
+    console.log("Dispatched!");
+  });
 });
