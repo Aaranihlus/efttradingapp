@@ -12,6 +12,11 @@
     src: url("../fonts/bender.otf");
 }
 
+@font-face {
+  font-family: BenderBold;
+  src: url("../fonts/bender-Bold.otf");
+}
+
 .bg-dark {
     background-color: #090809 !important;
 }
@@ -62,6 +67,10 @@ p{
 a, li {
   font-family: Bender;
   color:#9a8866;
+}
+
+.bold {
+  font-family: BenderBold;
 }
 
 body {

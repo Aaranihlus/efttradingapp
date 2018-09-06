@@ -10707,6 +10707,11 @@ button.toast-close-button {
   src: url(/fonts/bender.otf?1c59c05425947b48bc99fe1b85aba3fc);
 }
 
+@font-face {
+  font-family: BenderBold;
+  src: url(/fonts/bender-Bold.otf?b808ba56eab563be238bec1f8b563c02);
+}
+
 .bg-dark {
   background-color: #090809 !important;
 }
@@ -10762,6 +10767,10 @@ a,
 li {
   font-family: Bender;
   color: #9a8866;
+}
+
+.bold {
+  font-family: BenderBold;
 }
 
 body {
