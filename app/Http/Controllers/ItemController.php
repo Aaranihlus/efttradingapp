@@ -17,9 +17,9 @@ class ItemController extends Controller
     }
 
     //Returns all items within the specified sub category
-    public function CategoryItems($sub_category)
+    public function CategoryItems($sub_category, $main_category)
     {
-      return Item::all()->where('sub_category', $sub_category);
+      return Item::where('sub_category', str_replace(" ", "_", $sub_category))->where('main_category', str_replace(" ", "_", $main_category))->get();
     }
 
     //Returns all sub categories within the specified main category
@@ -32,7 +32,7 @@ class ItemController extends Controller
     public function MainCategories()
     {
        return Cache::remember('all_main_categories', 60, function (){
-         return Item::distinct('main_category')->pluck('main_category');
+         return Item::distinct('main_category')->where('main_category', '!=', "Ammunition")->pluck('main_category');
        });
     }
 

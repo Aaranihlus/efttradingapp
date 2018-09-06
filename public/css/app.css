@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);/*!
+/*!
  * Bootstrap v4.1.3 (https://getbootstrap.com/)
  * Copyright 2011-2018 The Bootstrap Authors
  * Copyright 2011-2018 Twitter, Inc.
@@ -10702,8 +10702,18 @@ button.toast-close-button {
   }
 }
 
+@font-face {
+  font-family: Bender;
+  src: url(/fonts/bender.otf?1c59c05425947b48bc99fe1b85aba3fc);
+}
+
+@font-face {
+  font-family: BenderBold;
+  src: url(/fonts/bender-Bold.otf?b808ba56eab563be238bec1f8b563c02);
+}
+
 .bg-dark {
-  background-color: #000 !important;
+  background-color: #090809 !important;
 }
 
 .thin-border {
@@ -10723,6 +10733,44 @@ button.toast-close-button {
 
 .btn {
   border-radius: 0;
+  border: 0;
+  background-color: #9a8866;
+  color: black;
+  text-transform: uppercase;
+  width: 25%;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open > .dropdown-toggle.btn-primary {
+  background-color: #fef7db;
+  border-color: #fef7db;
+  color: black;
+}
+
+.list-group-item {
+  background-color: #090809;
+  border: 1px solid #9a8866;
+}
+
+a {
+  color: #ad9464;
+}
+
+p {
+  color: white;
+}
+
+a,
+li {
+  font-family: Bender;
+  color: #9a8866;
+}
+
+.bold {
+  font-family: BenderBold;
 }
 
 body {

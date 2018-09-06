@@ -1,14 +1,24 @@
 
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+//@import url('https://fonts.googleapis.com/css?family=Nunito');
 // Variables
 @import 'variables';
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 @import "~toastr/toastr.scss";
 
+@font-face {
+    font-family: Bender;
+    src: url("../fonts/bender.otf");
+}
+
+@font-face {
+  font-family: BenderBold;
+  src: url("../fonts/bender-Bold.otf");
+}
+
 .bg-dark {
-    background-color: #000 !important;
+    background-color: #090809 !important;
 }
 
 .thin-border {
@@ -28,14 +38,42 @@
 
 .btn {
   border-radius:0;
+  border:0;
+  background-color: #9a8866;
+  color: black;
+  text-transform: uppercase;
+  width:25%;
 }
 
-p {
-  //color:white;
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+    background-color: #fef7db;
+    border-color: #fef7db;
+    color:black;
+}
+
+.list-group-item{
+  background-color: #090809;
+  border:1px solid #9a8866;
+}
+
+a {
+  color: #ad9464;
+}
+
+p{
+  color:white;
+}
+
+a, li {
+  font-family: Bender;
+  color:#9a8866;
+}
+
+.bold {
+  font-family: BenderBold;
 }
 
 body {
-  //background-color: #353a3f;
   background: url('../images/eftbackground.jpg');
   background-attachment: fixed;
   background-repeat: no-repeat;
