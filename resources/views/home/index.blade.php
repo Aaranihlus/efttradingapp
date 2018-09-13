@@ -54,12 +54,15 @@
       <ul class="list-group">
         <li class="list-group-item">Browse All Listings</li>
 
-        <li class="list-group-item p-0">
+        <li class="list-group-item">Main Categories</li>
+        <li class="list-group-item p-0" id="MainCategoriesContainer">
           <div id="MainCategories"></div>
         </li>
 
-        <li class="list-group-item p-0">
-          <div id="SubCategories"></div>
+
+        <li class="list-group-item" id="SubCatHeader" style="display:none;">Sub Categories</li>
+        <li class="list-group-item p-0" id="SubCategoriesContainer" style="display:none;">
+          <div class="container-fluid p-0" id="SubCategories"></div>
         </li>
 
         <li class="list-group-item">

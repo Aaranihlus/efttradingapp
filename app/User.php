@@ -9,17 +9,17 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    protected $fillable = ['username', 'email', 'password'];
+    protected $fillable = ['username', 'email', 'password', 'discord_id', 'profile_picture'];
     protected $hidden = ['password', 'remember_token'];
 
     public function selling()
     {
-      return $this->hasMany('App\UserSelling')->with('item');
+      return $this->hasMany('App\UserSelling');
     }
 
     public function buying()
     {
-      return $this->hasMany('App\UserBuying')->with('item');
+      return $this->hasMany('App\UserBuying');
     }
 
 }

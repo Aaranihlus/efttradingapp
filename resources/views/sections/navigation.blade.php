@@ -29,6 +29,10 @@
       </li>
 
       <li class="nav-item">
+        <a class="nav-link" style="color:#9a8866;" href="/offers">My Offers</a>
+      </li>
+
+      <li class="nav-item">
         <a class="nav-link" style="color:#9a8866;" href="/logout">Logout</a>
       </li>
       @endauth

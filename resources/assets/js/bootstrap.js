@@ -1,5 +1,5 @@
 
-window._ = require('lodash');
+/*window._ = require('lodash');
 window.Popper = require('popper.js').default;
 
 /**
@@ -44,13 +44,44 @@ if (token) {
  * allows your team to easily build robust real-time web applications.
  */
 
-// import Echo from 'laravel-echo'
+ import Echo from 'laravel-echo'
+ window.Pusher = require('pusher-js');
 
-// window.Pusher = require('pusher-js');
+ if ($('#offer_messages').length ){
+  window.Echo = new Echo({
+       broadcaster: 'pusher',
+       key: process.env.MIX_PUSHER_APP_KEY,
+       cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+       encrypted: true
+   });
 
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: process.env.MIX_PUSHER_APP_KEY,
-//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-//     encrypted: true
-// });
+   var offer_id = $('#offer_message_offer_id').val();
+   var notification = new Audio('../audio/beep.mp3');
+
+   window.Echo.channel('offers' + offer_id)
+   .listen('NewMessage', e => {
+     $('#offer_messages').append("<p>" + e.username + ": " + e.message + "</p>");
+     notification.play();
+
+     if ($('#no_messages_info').length ) {
+       $('#no_messages_info').remove();
+     }
+
+   });
+};
+
+
+
+$('#offer_message_send').on('click', function(e){
+  e.preventDefault();
+  $.post("/send_offer_message", $( "#New_Message_Form" ).serialize(), function(response){
+
+    $('#offer_messages').append("<p>" + $('#offer_message_username').val() + ": " + $('#offer_message_message').val() + "</p>");
+    $('#offer_message_message').val('')
+
+    if ($('#no_messages_info').length ) {
+      $('#no_messages_info').remove();
+    }
+
+  });
+});

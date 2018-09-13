@@ -23,7 +23,9 @@ class AuthController extends Controller
       $user = User::create([
         'username' => request('username'),
         'email' => request('email'),
-        'password' => bcrypt(request('password'))
+        'password' => bcrypt(request('password')),
+        'discord_id' => "hello",
+        'profile_picture' => "hello"
       ]);
 
       auth()->login($user);
