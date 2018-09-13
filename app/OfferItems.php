@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class OfferItems extends Model
 {
     protected $table = 'offer_items';
-    protected $fillable = ['offer_id', 'item_id', 'quantity', 'price'];
+    protected $fillable = ['offer_id', 'item_id', 'quantity', 'price', 'currency'];
 
 
     public function offer()

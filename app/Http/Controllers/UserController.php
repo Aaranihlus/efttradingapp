@@ -17,9 +17,13 @@ class UserController extends Controller
 
   public function showProfile($username)
   {
-    $sale_listings = UserSelling::ItemUser()->orderBy('created_at', 'desc')->limit(10)->get();
-    $buy_listings = UserBuying::ItemUser()->orderBy('created_at', 'desc')->limit(10)->get();
-    return view('profile.show', compact('sale_listings', 'buy_listings'));
+    $id = User::where('username', $username)->pluck('id');
+
+    $sale_listings = UserSelling::ItemUser()->where('user_id', $id)->orderBy('created_at', 'desc')->get();
+
+    $buy_listings = UserBuying::ItemUser()->where('user_id', $id)->orderBy('created_at', 'desc')->get();
+
+    return view('profile.show', compact('sale_listings', 'buy_listings', 'username'));
   }
 
 

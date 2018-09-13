@@ -1,6 +1,10 @@
+require('./bootstrap');
+
 window.$ = require('jquery');
-require('bootstrap');
 window.toastr = require('toastr');
+//window.Vue = require('vue');
+
+
 
 toastr.options = {
   "closeButton": false,
@@ -19,6 +23,7 @@ toastr.options = {
   "showMethod": "fadeIn",
   "hideMethod": "fadeOut"
 };
+
 
 var selected_main_category = "";
 
@@ -141,8 +146,7 @@ $( "#CategoryItems" ).on( "click", ".col-4", function()
 });
 
 
-$('#UpdateBuying').on('click', function(e)
-{
+$('#UpdateBuying').on('click', function(e){
   e.preventDefault();
   $.post("/user/update_buying", $( "#BuyingForm" ).serialize(), function(response)
   {
@@ -153,8 +157,7 @@ $('#UpdateBuying').on('click', function(e)
   });
 });
 
-$('#UpdateSelling').on('click', function(e)
-{
+$('#UpdateSelling').on('click', function(e){
   e.preventDefault();
   $.post("/user/update_selling", $( "#SellingForm" ).serialize(), function(response)
   {
@@ -183,14 +186,14 @@ $('#OfferModal').on('show.bs.modal', function (event)
 
 $('#SendOfferButton').on('click', function()
 {
-  $.post("/offer", { quantity: $('#offer_quantity').val(),
-                     price: $('#offer_price').val(),
-                     _token: $('input[name="_token"]').val(),
-                     lister_id: $('#lister_id').val(),
-                     currency: $('#offer_currency').val(),
-                     item_id: $('#offer_item_id').val(),
-                   }, function(response)
+  $.post("/offer", { quantity: $('#offer_quantity').val(), price: $('#offer_price').val(), _token: $('input[name="_token"]').val(), lister_id: $('#lister_id').val(), currency: $('#offer_currency').val(), item_id: $('#offer_item_id').val() },
+  function(response)
   {
-    console.log("Dispatched!");
+    if(response == "success"){
+      toastr.info('Your offer was sent successfully!');
+    }
+    else {
+      toastr.error('Failed to send trade offer');
+    }
   });
 });

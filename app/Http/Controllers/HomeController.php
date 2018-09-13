@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Item;
 use App\UserBuying;
 use App\UserSelling;
+use App\Events\UpdateOrderStatus;
 
 class HomeController extends Controller
 {

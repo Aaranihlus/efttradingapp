@@ -28,7 +28,7 @@
           {{ csrf_field() }}
 
           <div class="form-group row">
-            <label for="username" class="col-2 col-form-label">Username</label>
+            <label for="username" class="col-2 col-form-label">EFT Username</label>
             <div class="col-10">
               <input class="form-control" type="text" id="username" name="username">
             </div>
@@ -105,6 +105,67 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         <button type="button" class="btn btn-primary" id="SendOfferButton">Send Offer</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Offer Modal -->
+
+
+
+<!-- Mark as Completed Modal -->
+<div class="modal fade" id="OfferCompleteModal" tabindex="-1" role="dialog" aria-labelledby="OfferModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="OfferModalLabel">Complete Trade</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form id="OfferCompleteForm">
+          {{ csrf_field() }}
+          <label>This will close the current trade and mark it as completed for you and your trade partner.</label>
+          <label>You will be able to rate this trade, leave a comment and report a scam from your offers page after it is marked as complete.</p>
+        </form>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" style="width:50%;" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+        <button type="button" style="width:50%;" class="btn btn-primary" id="markAsCompleteButton">Mark as Complete</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Offer Modal -->
+
+
+
+<!-- Cancel Trade Modal -->
+<div class="modal fade" id="OfferCancelModal" tabindex="-1" role="dialog" aria-labelledby="OfferModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="OfferModalLabel">Cancel Trade</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form id="OfferCompleteForm">
+          {{ csrf_field() }}
+          <label>This will cancel the current trade for you and your trade partner.</label>
+          <label>The offer will be deleted, and removed from your offers page.</p>
+        </form>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" style="width:100%;" class="btn btn-primary" id="markAsCompleteButton">Cancel This Trade</button>
       </div>
     </div>
   </div>

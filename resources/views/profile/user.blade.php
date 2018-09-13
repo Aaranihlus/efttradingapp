@@ -25,6 +25,10 @@
         <li class="list-group-item">
           <p>Rating:</p>
         </li>
+
+        <li class="list-group-item">
+          <p>Scam Reports:</p>
+        </li>
       </ul>
     </div>
 
@@ -53,7 +57,6 @@
       <ul class="list-group">
 
         <li class="list-group-item">Main Categories</li>
-
         <li class="list-group-item p-0" id="MainCategoriesContainer">
           <div id="MainCategories"></div>
         </li>
