@@ -1,6 +1,6 @@
 <footer class="text-muted">
-  <div class="container">
-    <p class="float-right">Footer</p>
+  <div class="container-fluid">
+    <p>All images are copyright of BATTLESTATE GAMES LIMITED</p>
   </div>
 </footer>
 
