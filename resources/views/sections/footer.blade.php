@@ -1,7 +1,5 @@
-<footer class="footer bg-dark">
-  <div class="container">
-    <span class="text-muted">All images are copyright of BATTLESTATE GAMES LIMITED</span>
-  </div>
+<footer class="footer">
+  <p>All images are copyright of BATTLESTATE GAMES LIMITED</p>
 </footer>
 
 
