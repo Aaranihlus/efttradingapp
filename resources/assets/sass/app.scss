@@ -12,8 +12,17 @@
     src: url("../fonts/bender.otf");
 }
 
-footer {
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+.footer {
   background-color: black;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  line-height: 60px;
 }
 
 @font-face {
