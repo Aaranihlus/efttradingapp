@@ -31,27 +31,22 @@ class OfferController extends Controller
     }
 
     //View a specific offer
-    public function show(Offer $offer)
-    {
+    public function show(Offer $offer){
       $offer_item = OfferItems::where('offer_id', $offer->id)->first();
       $offer_messages = OfferMessage::where('offer_id', $offer->id)->get();
+      if( ($offer->creator_id != auth()->user()->id) AND ($offer->recipient_id != auth()->user()->id) ){
+        return redirect('/');
+      }
       return view('offer.show', compact('offer', 'offer_item', 'offer_messages'));
     }
 
-    public function index()
-    {
+    public function index(){
       $offers = Offer::where('recipient_id', auth()->user()->id)->orWhere('creator_id', auth()->user()->id)->get();
       return view('offer.index', compact('offers'));
     }
 
-    public function sendMessage(Request $request)
-    {
-      $message = OfferMessage::create([
-        'offer_id' => $request->offer_id,
-        'username' => $request->username,
-        'message' => $request->message
-      ]);
-
+    public function sendMessage(Request $request){
+      $message = OfferMessage::create([ 'offer_id' => $request->offer_id, 'username' => $request->username, 'message' => $request->message ]);
       NewMessage::dispatch($request->offer_id, $request->username, $request->message);
     }
 
