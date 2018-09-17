@@ -25,7 +25,7 @@ class AuthController extends Controller
       'email' => request('email'),
       'password' => bcrypt(request('password')),
       'discord_id' => request('discord_id'),
-      'profile_picture' => "hello"
+      'profile_picture' => request('profile_picture')
     ]);
 
     auth()->login($user);

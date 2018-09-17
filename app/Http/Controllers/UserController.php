@@ -11,18 +11,16 @@ class UserController extends Controller
 {
   public function myProfile()
   {
-    return view('profile.user');
+    $user = User::where('id', auth()->user()->id);
+    return view('profile.user', compact('user'));
   }
 
 
   public function showProfile($username)
   {
     $id = User::where('username', $username)->pluck('id');
-
     $sale_listings = UserSelling::ItemUser()->where('user_id', $id)->orderBy('created_at', 'desc')->get();
-
     $buy_listings = UserBuying::ItemUser()->where('user_id', $id)->orderBy('created_at', 'desc')->get();
-
     return view('profile.show', compact('sale_listings', 'buy_listings', 'username'));
   }
 
