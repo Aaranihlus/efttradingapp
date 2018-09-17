@@ -19,13 +19,13 @@
       </li>
 
       <li class="nav-item">
-          <a class="nav-link" href="#" data-toggle="modal" data-target="#registrationModal">Register</a>
+          <a class="nav-link" href="#" data-toggle="modal" data-target="#registrationModal">Sign Up</a>
       </li>
       @endguest
 
       @auth
       <li class="nav-item">
-        <a class="nav-link" style="color:#9a8866;" href="/profile">{{ auth()->user()->username }}</a>
+        <a class="nav-link" style="color:#9a8866;" href="/profile">My Inventory</a>
       </li>
 
       <li class="nav-item">

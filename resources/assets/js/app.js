@@ -2,9 +2,6 @@ require('./bootstrap');
 
 window.$ = require('jquery');
 window.toastr = require('toastr');
-//window.Vue = require('vue');
-
-
 
 toastr.options = {
   "closeButton": false,

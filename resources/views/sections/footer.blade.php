@@ -9,7 +9,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">New Account</h5>
+        <h5 class="modal-title">Create Account</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -36,6 +36,20 @@
             <label for="email" class="col-2 col-form-label">Email Address</label>
             <div class="col-10">
               <input class="form-control" type="email" id="email" name="email">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="discord_id" class="col-2 col-form-label">Discord ID</label>
+            <div class="col-10">
+              <input class="form-control" type="text" id="discord_id" name="discord_id" placeholder="username#4225">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="profile_picture" class="col-2 col-form-label">Profile Picture</label>
+            <div class="col-10">
+              <input class="form-control" type="file" id="profile_picture" name="profile_picture">
             </div>
           </div>
 
