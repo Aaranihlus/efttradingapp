@@ -7,64 +7,51 @@
 <!--registration Modal-->
 <div class="modal fade" id="registrationModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Create Account</h5>
+    <div class="modal-content" style="border: 1px solid #9a8866">
+      <div class="modal-header bg-dark">
+        <h5 class="modal-title">Create New Account</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
 
-      <div class="modal-body">
+      <div class="modal-body bg-dark">
 
         <div class="container">
           @include('sections.errors')
         </div>
 
-
-        <form method="POST" action="/register">
+        <form method="POST" action="/register" enctype="multipart/form-data">
           {{ csrf_field() }}
 
-          <div class="form-group row">
-            <label for="username" class="col-2 col-form-label">EFT Username</label>
-            <div class="col-10">
-              <input class="form-control" type="text" id="username" name="username">
-            </div>
+          <div class="form-group">
+            <label for="username">EFT Username</label>
+            <input class="form-control" type="text" id="username" name="username">
           </div>
 
-          <div class="form-group row">
-            <label for="email" class="col-2 col-form-label">Email Address</label>
-            <div class="col-10">
-              <input class="form-control" type="email" id="email" name="email">
-            </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input class="form-control" type="email" id="email" name="email">
           </div>
 
-          <div class="form-group row">
-            <label for="discord_id" class="col-2 col-form-label">Discord ID</label>
-            <div class="col-10">
-              <input class="form-control" type="text" id="discord_id" name="discord_id" placeholder="username#4225">
-            </div>
+          <div class="form-group">
+            <label for="discord_id">Discord ID</label>
+            <input class="form-control" type="text" id="discord_id" name="discord_id" placeholder="username#4225">
           </div>
 
-          <div class="form-group row">
-            <label for="profile_picture" class="col-2 col-form-label">Profile Picture</label>
-            <div class="col-10">
-              <input class="form-control" type="file" id="profile_picture" name="profile_picture">
-            </div>
+          <div class="form-group">
+            <label for="profile_picture">Profile Picture</label>
+            <input type="file" id="profile_picture" name="profile_picture">
           </div>
 
-          <div class="form-group row">
-            <label for="password" class="col-2 col-form-label">Password</label>
-            <div class="col-10">
-              <input class="form-control" type="text" id="password" name="password">
-            </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input class="form-control" type="text" id="password" name="password">
           </div>
 
-          <div class="form-group row">
-            <label for="password_confirmation" class="col-2 col-form-label">Password Confirmation</label>
-            <div class="col-10">
-              <input class="form-control" type="text" id="password_confirmation" name="password_confirmation">
-            </div>
+          <div class="form-group">
+            <label for="password_confirmation">Password Confirmation</label>
+            <input class="form-control" type="text" id="password_confirmation" name="password_confirmation">
           </div>
 
           <button type="submit" class="btn btn-primary">Submit</button>
