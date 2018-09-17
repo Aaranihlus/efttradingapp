@@ -14,21 +14,28 @@
           <h2>{{ auth()->user()->username }}</h2>
         </li>
 
+        <li class="list-group-item p-0">
+          <img class="img-fluid" src="storage/{{ $user->profile_picture }}">
+        </li>
+
         <li class="list-group-item">
-          <p>Profile Picture</p>
+          <div class="row">
+            <div class="col-4">
+              <img class="img-fluid" src="{{ asset('images/discord.png') }}">
+            </div>
+            <div class="col-8">
+              <p>Your Discord ID:</p>
+              <p>{{ $user->discord_id }}</p>
+            </div>
+          </div>
         </li>
 
         <li class="list-group-item">
           <p>Completed Trades:</p>
-        </li>
-
-        <li class="list-group-item">
           <p>Rating:</p>
-        </li>
-
-        <li class="list-group-item">
           <p>Scam Reports:</p>
         </li>
+
       </ul>
     </div>
 

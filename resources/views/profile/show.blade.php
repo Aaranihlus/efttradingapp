@@ -7,10 +7,44 @@
 
   <div class="row">
 
+
+    <div class="col-2">
+
+      <ul class="list-group text-center">
+        <li class="list-group-item">
+          <h2>{{ $user->username }}</h2>
+        </li>
+
+        <li class="list-group-item p-0">
+          <img class="img-fluid" src="../storage/{{ $user->profile_picture }}">
+        </li>
+
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-4">
+              <img class="img-fluid" src="{{ asset('images/discord.png') }}">
+            </div>
+            <div class="col-8">
+              <p>{{ $user->username }}'s Discord ID:</p>
+              <p>{{ $user->discord_id }}</p>
+            </div>
+          </div>
+        </li>
+
+        <li class="list-group-item">
+          <p>Completed Trades:</p>
+          <p>Rating:</p>
+          <p>Scam Reports:</p>
+        </li>
+
+      </ul>
+    </div>
+
+
     @if(count($sale_listings))
-    <div class="col-6">
+    <div class="col-5">
       <ul class="list-group">
-        <li class="list-group-item">{{ $username }} is selling</li>
+        <li class="list-group-item">{{ $user->username }} is selling</li>
         @foreach($sale_listings as $listing)
           @if($listing->quantity)
           <li class="list-group-item">
@@ -28,19 +62,19 @@
       </ul>
     </div>
     @else
-    <div class="col-6">
+    <div class="col-5">
       <ul class="list-group">
         <li class="list-group-item">
-          <h2>{{ $username }} is not selling any items.</h2>
+          <h2>{{ $user->username }} is not selling any items.</h2>
         </li>
       </ul>
     </div>
     @endif
 
     @if(count($buy_listings))
-    <div class="col-6">
+    <div class="col-5">
       <ul class="list-group">
-        <li class="list-group-item">{{ $username }} is buying</li>
+        <li class="list-group-item">{{ $user->username }} is buying</li>
         @foreach($buy_listings as $listing)
           @if($listing->quantity)
           <li class="list-group-item">
@@ -58,10 +92,10 @@
       </ul>
     </div>
     @else
-    <div class="col-6">
+    <div class="col-5">
       <ul class="list-group">
         <li class="list-group-item">
-          <h2>{{ $username }} is not buying any items.</h2>
+          <h2>{{ $user->username }} is not buying any items.</h2>
         </li>
       </ul>
     </div>

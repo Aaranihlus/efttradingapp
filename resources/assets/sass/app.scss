@@ -66,6 +66,10 @@ html {
     color:black;
 }
 
+.modal-header {
+  border-bottom: 1px solid #9a8866;
+}
+
 .list-group-item{
   background-color: #090809;
   border:1px solid #9a8866;
@@ -75,7 +79,12 @@ a {
   color: #ad9464;
 }
 
-p{
+label {
+  color: #9a8866;
+  font-family: Bender;
+}
+
+p, h5, span{
   color:white;
   font-family: Bender;
 }

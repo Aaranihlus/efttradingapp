@@ -7,26 +7,25 @@ use App\User;
 
 class AuthController extends Controller
 {
-
-  public function register(){
-    return view('auth.register');
-  }
-
   public function store(Request $request){
 
-    $this->validate(request(), [
+    $this->validate($request, [
       'username' => 'required',
       'email' => 'required|email',
-      'password' => 'required|confirmed'
+      'password' => 'required|confirmed',
+      'profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
     ]);
 
+    $path = $request->file('profile_picture')->store('profile_pictures');
+
     $user = User::create([
-      'username' => request('username'),
-      'email' => request('email'),
-      'password' => bcrypt(request('password')),
-      'discord_id' => request('discord_id'),
-      'profile_picture' => request('profile_picture')
+      'username' => $request->username,
+      'email' => $request->email,
+      'password' => bcrypt($request->password),
+      'discord_id' => $request->discord_id,
+      'profile_picture' => $path
     ]);
+
 
     auth()->login($user);
 
