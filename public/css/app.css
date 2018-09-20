@@ -10804,5 +10804,6 @@ body {
   background: url(/images/eftbackground.jpg?d13c2276c361219059034f72460a9bd1);
   background-attachment: fixed;
   background-repeat: no-repeat;
+  padding-bottom: 5vh;
 }
 

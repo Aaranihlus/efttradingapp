@@ -19,7 +19,7 @@
       </li>
 
       <li class="nav-item">
-          <a class="nav-link" href="#" data-toggle="modal" data-target="#registrationModal">Sign Up</a>
+          <a class="nav-link" href="/register">Sign Up</a>
       </li>
       @endguest
 

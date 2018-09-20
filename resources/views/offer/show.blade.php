@@ -79,7 +79,8 @@
           <p>Item: {{ $offer_item->item->name }}</p>
           <img class="img-fluid mx-auto d-block" src="../images/{{ $offer_item->item->main_category }}/{{ $offer_item->item->image }}">
           <p>Quantity: {{ $offer_item->quantity }}</p>
-          <p>Price per unit: {{ $offer_item->price }} {{ $offer_item->currency }}</p>
+          <p>Price per unit: {{ number_format($offer_item->price) }} {{ $offer_item->currency }}</p>
+          <p>Offer Total: {{ ( number_format($offer_item->price  * $offer_item->quantity) ) }} {{ $offer_item->currency }} </p>
         </li>
       </ul>
 

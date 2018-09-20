@@ -147,8 +147,7 @@ $('#UpdateBuying').on('click', function(e){
   e.preventDefault();
   $.post("/user/update_buying", $( "#BuyingForm" ).serialize(), function(response)
   {
-    if(response == "true")
-    {
+    if(response == "true"){
       toastr.info('Buying Information Successfully Updated!');
     }
   });
@@ -158,8 +157,7 @@ $('#UpdateSelling').on('click', function(e){
   e.preventDefault();
   $.post("/user/update_selling", $( "#SellingForm" ).serialize(), function(response)
   {
-    if(response == "true")
-    {
+    if(response == "true"){
       toastr.info('Selling Information Successfully Updated!');
     }
   });
@@ -167,8 +165,7 @@ $('#UpdateSelling').on('click', function(e){
 
 
 
-$('#OfferModal').on('show.bs.modal', function (event)
-{
+$('#OfferModal').on('show.bs.modal', function (event){
   var button = $(event.relatedTarget);
   var modal = $(this);
   modal.find('.modal-title').text(button.text() + button.data('name'));
@@ -181,15 +178,12 @@ $('#OfferModal').on('show.bs.modal', function (event)
 });
 
 
-$('#SendOfferButton').on('click', function()
-{
+$('#SendOfferButton').on('click', function(){
   $.post("/offer", { quantity: $('#offer_quantity').val(), price: $('#offer_price').val(), _token: $('input[name="_token"]').val(), lister_id: $('#lister_id').val(), currency: $('#offer_currency').val(), item_id: $('#offer_item_id').val() },
-  function(response)
-  {
+  function(response){
     if(response == "success"){
       toastr.info('Your offer was sent successfully!');
-    }
-    else {
+    }else {
       toastr.error('Failed to send trade offer');
     }
   });

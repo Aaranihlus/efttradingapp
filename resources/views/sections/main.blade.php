@@ -11,7 +11,7 @@
 </head>
 
 <body>
-  <div class="container-fluid p-0" id="app">
+  <div class="container-fluid p-0" id="app" @auth data-uid="{{ auth()->user()->id }}" @endauth>
     @include ('sections.navigation')
     @yield ('content')
     @include ('sections.footer')
