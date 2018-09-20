@@ -76,7 +76,7 @@
       </ul>
     </div>
     @else
-    <p>You have not sent any offers</p>
+      <p>You have not sent any offers</p>
     @endif
 
   </div>

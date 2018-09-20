@@ -49,12 +49,19 @@
           @if($listing->quantity)
           <li class="list-group-item">
             <div class="row">
-              <div class="col-6">
+              <div class="col-5">
                 <img class="img-fluid" src="../images/{{ $listing->item->main_category }}/{{ $listing->item->image }}">
               </div>
-              <div class="col-6">
+              <div class="col-5">
                 <p><a href="/profile/{{ $listing->user->username }}">{{ $listing->user->username }}</a> is selling {{ $listing->quantity }}x <a href="/item/{{ $listing->item->id }}">{{ $listing->item->name }}</a> for {{ $listing->price }} {{ $listing->currency }} each</p>
               </div>
+
+              <div class="col-2">
+                <button class="btn btn-primary" data-name="{{ $listing->item->name }}" data-image="{{ $listing->item->image }}" data-price="{{ $listing->price }}"
+                        data-currency="{{ $listing->currency }}" data-quantity="{{ $listing->quantity }}" data-toggle="modal" data-target="#OfferModal" style="width:100%;">Buy
+                </button>
+              </div>
+
             </div>
           </li>
           @endif
@@ -79,12 +86,18 @@
           @if($listing->quantity)
           <li class="list-group-item">
             <div class="row">
-              <div class="col-6">
+              <div class="col-5">
                 <img class="img-fluid" src="../images/{{ $listing->item->main_category }}/{{ $listing->item->image }}">
               </div>
-              <div class="col-6">
+              <div class="col-5">
                 <p><a href="/profile/{{ $listing->user->username }}">{{$listing->user->username }}</a> wants to buy {{ $listing->quantity }}x <a href="/item/{{ $listing->item->id }}">{{$listing->item->name}}</a> for {{ $listing->price }} {{ $listing->currency }} each</p>
-            </div>
+              </div>
+              <div class="col-2">
+                  <button class="btn btn-primary" data-name="{{ $listing->item->name }}" data-image="{{ $listing->item->image }}" data-price="{{ $listing->price }}"
+                          data-currency="{{ $listing->currency }}" data-quantity="{{ $listing->quantity }}" data-toggle="modal" data-target="#OfferModal" style="width:100%;">Sell
+                  </button>
+              </div>
+
             </div>
           </li>
           @endif
