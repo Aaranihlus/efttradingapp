@@ -16,10 +16,10 @@
           <li class="list-group-item p-2">
             <div class="row">
               <div class="col-6">
-                <img class="img-fluid mx-auto d-block" src="../images/{{ $listing->item->main_category }}/{{ $listing->item->image }}">
+                <img class="img-fluid mx-auto d-block" alt="{{ $listing->item->name }} Image" src="../images/{{ $listing->item->main_category }}/{{ $listing->item->image }}">
               </div>
               <div class="col-6">
-                <p><a href="/profile/{{ $listing->user->username }}">{{$listing->user->username }}</a> is selling {{ $listing->quantity }}x <a href="/item/{{ $listing->item->id }}">{{ $listing->item->name }}</a> for {{ $listing->price }} {{ $listing->currency }} each</p>
+                <p><a href="/profile/{{ $listing->user->username }}">{{$listing->user->username }}</a> is selling {{ $listing->quantity }}x <a href="/item/{{ $listing->item->id }}">{{ $listing->item->name }}</a> for {{ number_format($listing->price) }} {{ $listing->currency }} each</p>
               </div>
             </div>
           </li>
@@ -36,10 +36,10 @@
           <li class="list-group-item p-2">
             <div class="row">
               <div class="col-6">
-                <img class="img-fluid mx-auto d-block" src="../images/{{ $listing->item->main_category }}/{{ $listing->item->image }}">
+                <img class="img-fluid mx-auto d-block" alt="{{ $listing->item->name }} Image" src="../images/{{ $listing->item->main_category }}/{{ $listing->item->image }}">
               </div>
               <div class="col-6">
-                <p><a href="/profile/{{ $listing->user->username }}">{{$listing->user->username }}</a> wants to buy {{ $listing->quantity }}x <a href="/item/{{ $listing->item->id }}">{{$listing->item->name}}</a> for {{ $listing->price }} {{ $listing->currency }} each</p>
+                <p><a href="/profile/{{ $listing->user->username }}">{{$listing->user->username }}</a> wants to buy {{ $listing->quantity }}x <a href="/item/{{ $listing->item->id }}">{{$listing->item->name}}</a> for {{ number_format($listing->price) }} {{ $listing->currency }} each</p>
             </div>
             </div>
           </li>

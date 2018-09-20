@@ -11,6 +11,6 @@
 |
 */
 
-Broadcast::channel('App.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+Broadcast::channel('new_offers_for_{recipient_id}', function($user, $recipient_id) {
+  return (int) $user->id == (int) $recipient_id;
 });

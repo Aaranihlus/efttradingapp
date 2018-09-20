@@ -4,73 +4,13 @@
 
 
 
-<!--registration Modal-->
-<div class="modal fade" id="registrationModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content" style="border: 1px solid #9a8866">
-      <div class="modal-header bg-dark">
-        <h5 class="modal-title">Create New Account</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-
-      <div class="modal-body bg-dark">
-
-        <div class="container">
-          @include('sections.errors')
-        </div>
-
-        <form method="POST" action="/register" enctype="multipart/form-data">
-          {{ csrf_field() }}
-
-          <div class="form-group">
-            <label for="username">EFT Username</label>
-            <input class="form-control" type="text" id="username" name="username">
-          </div>
-
-          <div class="form-group">
-            <label for="email">Email Address</label>
-            <input class="form-control" type="email" id="email" name="email">
-          </div>
-
-          <div class="form-group">
-            <label for="discord_id">Discord ID</label>
-            <input class="form-control" type="text" id="discord_id" name="discord_id" placeholder="username#4225">
-          </div>
-
-          <div class="form-group">
-            <label for="profile_picture">Profile Picture</label>
-            <input type="file" id="profile_picture" name="profile_picture">
-          </div>
-
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input class="form-control" type="text" id="password" name="password">
-          </div>
-
-          <div class="form-group">
-            <label for="password_confirmation">Password Confirmation</label>
-            <input class="form-control" type="text" id="password_confirmation" name="password_confirmation">
-          </div>
-
-          <button type="submit" class="btn btn-primary">Submit</button>
-
-        </form>
-      </div>
-
-    </div>
-  </div>
-</div>
-<!-- registration Modal -->
-
 
 <!-- Offer Modal -->
 <div class="modal fade" id="OfferModal" tabindex="-1" role="dialog" aria-labelledby="OfferModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="OfferModalLabel"></h5>
+        <h5 class="modal-title" id="OfferModalLabel">Modal Title</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -94,7 +34,7 @@
           </div>
 
           <div class="form-group">
-            <label for="offer_price" class="col-form-label" id="">Price Per Unit</label>
+            <label for="offer_price" class="col-form-label">Price Per Unit</label>
             <input type="number" class="form-control" id="offer_price">
           </div>
         </form>
@@ -117,7 +57,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="OfferModalLabel">Complete Trade</h5>
+        <h5 class="modal-title">Complete Trade</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -127,7 +67,7 @@
         <form id="OfferCompleteForm">
           {{ csrf_field() }}
           <label>This will close the current trade and mark it as completed for you and your trade partner.</label>
-          <label>You will be able to rate this trade, leave a comment and report a scam from your offers page after it is marked as complete.</p>
+          <label>You will be able to rate this trade, leave a comment and report a scam from your offers page after it is marked as complete.</label>
         </form>
 
 
@@ -148,17 +88,17 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="OfferModalLabel">Cancel Trade</h5>
+        <h5 class="modal-title">Cancel Trade</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
 
-        <form id="OfferCompleteForm">
+        <form id="OfferCancelForm">
           {{ csrf_field() }}
           <label>This will cancel the current trade for you and your trade partner.</label>
-          <label>The offer will be deleted, and removed from your offers page.</p>
+          <label>The offer will be deleted, and removed from your offers page.</label>
         </form>
 
 

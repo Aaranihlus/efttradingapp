@@ -1,7 +1,7 @@
 @if(count($errors))
-  <div class="alert alert-danger" role="alert">
+  <div class="alert alert-danger" id="error_panel" role="alert">
     @foreach ($errors->all() as $error )
-      <p id="error_line">{{ $error }}</p>
+      {{ $error }}<br>
     @endforeach
   </div>
 @endif
