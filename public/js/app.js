@@ -11131,6 +11131,7 @@ module.exports = __webpack_require__(38);
 __webpack_require__(10);
 
 window.$ = __webpack_require__(1);
+
 window.toastr = __webpack_require__(36);
 
 toastr.options = {
@@ -11153,7 +11154,6 @@ toastr.options = {
 
 var selected_main_category = "";
 
-//Get Main Categories on Page Load
 if ($('#MainCategories').length) {
   $.getJSON('/items/main', function (response) {
     $.each(response, function (k, v) {
@@ -11162,7 +11162,6 @@ if ($('#MainCategories').length) {
   });
 };
 
-//When a main category is clicked, get its sub categories
 $("#MainCategories").on("click", "button", function (e) {
   $('#SubCatHeader').show();
   $('#SubCategoriesContainer').show();
@@ -11176,7 +11175,6 @@ $("#MainCategories").on("click", "button", function (e) {
   });
 });
 
-//When a sub category is clicked, get its items
 $("#SubCategories").on("click", "button", function () {
   $('#CategoryItemsContainer').show();
   $('#CategoryItems').empty();
@@ -11205,14 +11203,14 @@ $("#CategoryItems").on("click", ".col-4", function () {
   $('#ItemBuyingData').empty();
   $('#CategoryItems').empty();
 
-  $('#SelectedItemInfo').append('<div data-id="' + SelectedItemId + '"><p>' + SelectedItemName + '</p><img class="img-fluid" src="' + ImgPath + '"></div>');
+  $('#SelectedItemInfo').append('<div data-id="' + SelectedItemId + '"><p>Selected: ' + SelectedItemName + '</p>\n                                      <img class="img-fluid" src="' + ImgPath + '">\n                                   </div>');
 
   $('#item_id_s').val(SelectedItemId);
   $('#item_id_b').val(SelectedItemId);
 
-  $('#ItemSellingData').append('<p>Selling</p>\n                                 <input type="number" class="form-control" id="s_quantity" name="quantity"></input>\n                                 <p>for:</p>\n                                 <input class="form-control" type="number" id="s_price" name="price"></input>\n                                 <select class="form-control" id="s_currency" name="currency">\n                                    <option value="Roubles">Roubles</option>\n                                    <option value="Euros">Euros</option>\n                                    <option value="Dollars">Dollars</option>\n                                 </select>');
+  $('#ItemSellingData').append('<p>Selling Info</p>\n\n                                <div class="form-group row">\n                                  <label for="s_quantity" class="col-3 col-form-label">Quantity</label>\n                                  <div class="col-9">\n                                    <input type="number" class="form-control" id="s_quantity" name="quantity"></input>\n                                  </div>\n                                </div>\n\n                                <div class="form-group row">\n                                  <label for="s_price" class="col-3 col-form-label">Price</label>\n                                  <div class="col-9">\n                                    <input class="form-control" type="number" id="s_price" name="price"></input>\n                                  </div>\n                                </div>\n\n                                <div class="form-group row">\n                                  <label for="s_currency" class="col-3 col-form-label">Currency</label>\n                                  <div class="col-9">\n                                    <select class="form-control" id="s_currency" name="currency">\n                                      <option value="Roubles">Roubles</option>\n                                      <option value="Euros">Euros</option>\n                                      <option value="Dollars">Dollars</option>\n                                    </select>\n                                  </div>\n                                </div>');
 
-  $('#ItemBuyingData').append('<p>Buying</p>\n                                  <input type="number" class="form-control" id="b_quantity" name="quantity"></input>\n                                  <p>for:</p>\n                                  <input class="form-control" type="number" id="b_price" name="price"></input>\n                                  <select class="form-control" id="b_currency" name="currency">\n                                     <option value="Roubles">Roubles</option>\n                                     <option value="Euros">Euros</option>\n                                     <option value="Dollars">Dollars</option>\n                                  </select>');
+  $('#ItemBuyingData').append('<p>Buying Info</p>\n\n                                  <div class="form-group row">\n                                    <label for="b_quantity" class="col-3 col-form-label">Quantity</label>\n                                    <div class="col-9">\n                                      <input type="number" class="form-control" id="b_quantity" name="quantity"></input>\n                                    </div>\n                                  </div>\n\n                                  <div class="form-group row">\n                                    <label for="b_price" class="col-3 col-form-label">Price</label>\n                                    <div class="col-9">\n                                      <input class="form-control" type="number" id="b_price" name="price"></input>\n                                    </div>\n                                  </div>\n\n                                  <div class="form-group row">\n                                    <label for="b_currency" class="col-3 col-form-label">Currency</label>\n                                    <div class="col-9">\n                                      <select class="form-control" id="b_currency" name="currency">\n                                        <option value="Roubles">Roubles</option>\n                                        <option value="Euros">Euros</option>\n                                        <option value="Dollars">Dollars</option>\n                                      </select>\n                                    </div>\n                                  </div>');
 
   $.getJSON('/items/user/selling/' + SelectedItemId).done(function (response) {
     if (response[0]) {
@@ -11273,6 +11271,19 @@ $('#SendOfferButton').on('click', function () {
       toastr.error('Failed to send trade offer');
     }
   });
+});
+
+$('#recieved_offers_list').on('click', 'a', function (e) {
+  if (e.target.dataset.id) {
+    $.post("/close_offer", { offer_id: e.target.dataset.id, _token: $('#csrf_header').attr('content') }, function (response) {
+      if (response == "success") {
+        toastr.info('Offer Removed');
+        $('#offer-' + e.target.dataset.id).remove();
+      } else {
+        toastr.error('Failed to remove offer');
+      }
+    });
+  }
 });
 
 /***/ }),

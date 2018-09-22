@@ -76,8 +76,7 @@
 
 
         <li class="list-group-item p-0" id="SelectedItemContainer" style="display:none;">
-          <div class="container-fluid p-0">
-
+          <div class="container-fluid text-center">
             <br>
             <div class="row">
               <div class="col-4" id="SelectedItemInfo"></div>
@@ -87,7 +86,7 @@
                   {{ csrf_field() }}
                   <input class="form-control" type="text" id="item_id_s" name="item_id" value="" hidden>
                   <div id="ItemSellingData"></div>
-                  <button class="btn btn-primary align-middle" id="UpdateSelling">Update Selling</button>
+                  <button class="btn btn-primary" style="width:100%;" id="UpdateSelling">Update Selling</button>
                 </form>
               </div>
 
@@ -96,12 +95,13 @@
                   {{ csrf_field() }}
                   <input class="form-control" type="text" id="item_id_b" name="item_id" value="" hidden>
                   <div id="ItemBuyingData"></div>
-                  <button class="btn btn-primary align-middle" id="UpdateBuying">Update Buying</button>
+                  <button class="btn btn-primary" style="width:100%;" id="UpdateBuying">Update Buying</button>
                 </form>
               </div>
 
             </div>
           </div>
+          <br>
         </li>
 
 
