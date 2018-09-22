@@ -49,9 +49,16 @@ class OfferController extends Controller
 
     public function index()
     {
-      $received_offers = Offer::SenderItem()->where('creator_id', '!=', auth()->user()->id)->get();
-      $sent_offers = Offer::RecipientItem()->where('creator_id', auth()->user()->id)->get();
+      $received_offers = Offer::SenderItem()->where('creator_id', '!=', auth()->user()->id)->where('status', 'open')->get();
+      $sent_offers = Offer::RecipientItem()->where('creator_id', auth()->user()->id)->where('status', 'open')->get();
       return view('offer.index', compact('received_offers', 'sent_offers'));
+    }
+
+    public function closeOffer(Request $request){
+      $offer = Offer::find($request->offer_id);
+      $offer->status = 'Closed';
+      $offer->save();
+      return response()->json("success");
     }
 
 

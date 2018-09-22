@@ -10776,6 +10776,7 @@ html {
 
 a {
   color: #ad9464;
+  cursor: pointer;
 }
 
 label {

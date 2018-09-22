@@ -65,3 +65,5 @@ Route::get('/profile/{username}', 'UserController@showProfile');
 
 
 Route::post('/send_offer_message', 'OfferController@sendMessage');
+
+Route::post('/close_offer', 'OfferController@closeOffer');
