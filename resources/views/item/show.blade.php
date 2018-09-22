@@ -25,7 +25,7 @@
               </div>
               <div class="col-2">
                 @auth
-                <button class="btn btn-primary" data-name="{{ $listing->item->name }}" data-image="{{ $listing->item->image }}" data-price="{{ $listing->price }}" data-lister="{{ $listing->user->id }}"
+                <button class="btn btn-primary" data-name="{{ $listing->item->name }}" data-image="{{ $listing->item->image }}" data-price="{{ $listing->price }}" data-item_id="{{ $listing->item->id }}" data-lister="{{ $listing->user->id }}"
                         data-currency="{{ $listing->currency }}" data-quantity="{{ $listing->quantity }}" data-toggle="modal" data-target="#OfferModal" style="width:100%;">Buy
                 </button>
                 @endauth
@@ -68,7 +68,7 @@
             <div class="col-2">
 
               @auth
-              <button class="btn btn-primary" data-name="{{ $listing->item->name }}" data-image="{{ $listing->item->image }}" data-price="{{ $listing->price }}" data-lister="{{ $listing->user->id }}"
+              <button class="btn btn-primary" data-name="{{ $listing->item->name }}" data-image="{{ $listing->item->image }}" data-price="{{ $listing->price }}" data-item_id="{{ $listing->item->id }}" data-lister="{{ $listing->user->id }}"
                       data-currency="{{ $listing->currency }}" data-quantity="{{ $listing->quantity }}" data-item_id="{{ $listing->item->id }}" data-toggle="modal" data-target="#OfferModal" style="width:100%;">Sell
               </button>
               @endauth
