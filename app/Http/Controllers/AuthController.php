@@ -11,7 +11,6 @@ class AuthController extends Controller
 
     $this->validate($request, [
       'username' => 'required',
-      'email' => 'required|email',
       'password' => 'required|confirmed',
       'profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
     ]);
@@ -20,7 +19,6 @@ class AuthController extends Controller
 
     $user = User::create([
       'username' => $request->username,
-      'email' => $request->email,
       'password' => bcrypt($request->password),
       'discord_id' => $request->discord_id,
       'profile_picture' => $path
@@ -43,7 +41,7 @@ class AuthController extends Controller
 
 
   public function loginuser(){
-    if(auth()->attempt(request(['email', 'password']))){
+    if(auth()->attempt(request(['username', 'password']))){
       return redirect('/');
     } else {
       return back()->withErrors(['message' => "Please check your credentials and try again"]);

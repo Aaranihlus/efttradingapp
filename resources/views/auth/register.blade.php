@@ -11,7 +11,7 @@
   <ul class="list-group">
 
     <li class="list-group-item">
-      <h1>Register a new account</h1>
+      <h1>//Registration</h1>
     </li>
 
 
@@ -22,13 +22,6 @@
         <div class="form-group">
           <label for="username">EFT Username</label>
           <input class="form-control" type="text" id="username" name="username" required>
-        </div>
-      </li>
-
-      <li class="list-group-item">
-        <div class="form-group">
-          <label for="email">Email Address</label>
-          <input class="form-control" type="email" id="email" name="email" required>
         </div>
       </li>
 

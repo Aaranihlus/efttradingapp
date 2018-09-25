@@ -42,8 +42,15 @@ if ($('#offer_messages').length){
   let offer_id = $('#offer_message_offer_id').val();
 
   window.Echo.channel('offers' + offer_id).listen('NewMessage', e => {
-    $('#offer_messages').append("<p>" + e.username + ": " + e.message + "</p>");
-    notification.play();
+
+    if(e.message == "This Trade has been marked as complete" || e.message == "This Trade has been cancelled"){
+      $('#offer_messages').append("<p>" + e.message + "</p>");
+      $("#offer_message_send").prop('disabled', true);
+      notification.play();
+    } else {
+      $('#offer_messages').append("<p>" + e.username + ": " + e.message + "</p>");
+      notification.play();
+    }
 
     if ($('#no_messages_info').length){
       $('#no_messages_info').remove();

@@ -31,38 +31,50 @@
         </li>
 
         <li class="list-group-item">
-          <p>Completed Trades:</p>
-          <p>Rating:</p>
-          <p>Scam Reports:</p>
+          <p>Completed Trades: <span>{{ $completed_trades_count }}</span></p>
+          <p>Reputation: <span>{{ $user_total_rep }}</span></p>
+          <p>Scam Reports: <span>{{ $scam_reports }}</span></p>
         </li>
 
       </ul>
     </div>
 
-    <div class="col-2">
+    <div class="col-4">
       <ul class="list-group text-center">
-        <li class="list-group-item p-0">
-          <p>Items I am Buying<p>
+        <li class="list-group-item">
+          <h2>Recent Reviews</h2>
         </li>
+
+        <li class="list-group-item">
+          @foreach($completed_trades as $trade)
+
+            @foreach($trade->reviews as $review)
+
+              @if($review->reviewer_id != auth()->user()->id)
+
+                <p>({{ $review->created_at->diffForHumans() }}) {{ $review->reviewer->username }}: {{ $review->comment }}
+                @if($review->type == "positive")
+                  <i style="color:green" class="fas fa-thumbs-up"> +</i>
+                @else
+                  <i style="color:red" class="fas fa-thumbs-down"> -</i>
+                @endif
+                </p>
+              @endif
+            @endforeach
+          @endforeach
+        </li>
+
       </ul>
     </div>
-
-
-    <div class="col-2">
-      <ul class="list-group text-center">
-        <li class="list-group-item p-0">
-          <p>Items I am Selling<p>
-        </li>
-      </ul>
-    </div>
-
-
 
 
 
     <div class="col-6">
       <ul class="list-group">
 
+        <li class="list-group-item text-center">
+          <h2>Your Items</h2>
+        </li>
         <li class="list-group-item">Main Categories</li>
         <li class="list-group-item p-0" id="MainCategoriesContainer">
           <div id="MainCategories"></div>

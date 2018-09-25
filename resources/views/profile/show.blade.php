@@ -32,13 +32,32 @@
         </li>
 
         <li class="list-group-item">
-          <p>Completed Trades:</p>
-          <p>Rating:</p>
-          <p>Scam Reports:</p>
+          <p>Completed Trades: <span>{{ $completed_trades_count }}</span></p>
+          <p>Reputation: <span>{{ $user_total_rep }}</span></p>
+          <p>Scam Reports: <span>{{ $scam_reports }}</span></p>
+        </li>
+
+        <li class="list-group-item">
+          <p>Recent Reviews:</p>
+          @foreach($completed_trades as $trade)
+            @foreach($trade->reviews as $review)
+              @if($review->reviewer_id != $user->id)
+                <p>({{ $review->created_at->diffForHumans() }}) <a href="/profile/{{ $review->reviewer->username }}">{{ $review->reviewer->username }}</a>: {{ $review->comment }}
+                @if($review->type == "positive")
+                  <i style="color:green" class="fas fa-thumbs-up"> +</i>
+                @else
+                  <i style="color:red" class="fas fa-thumbs-down"> -</i>
+                @endif
+                </p>
+              @endif
+            @endforeach
+          @endforeach
+
         </li>
 
       </ul>
     </div>
+
 
 
     @if(count($sale_listings))

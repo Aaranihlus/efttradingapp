@@ -1,17 +1,12 @@
 require('./bootstrap');
-
-
 window.$ = require('jquery');
-
-
 window.toastr = require('toastr');
 
-
 toastr.options = {
-  "closeButton": false,
+  "closeButton": true,
   "debug": false,
   "newestOnTop": false,
-  "progressBar": false,
+  "progressBar": true,
   "positionClass": "toast-bottom-right",
   "preventDuplicates": false,
   "onclick": null,
@@ -25,9 +20,7 @@ toastr.options = {
   "hideMethod": "fadeOut"
 };
 
-
 var selected_main_category = "";
-
 
 if ($('#MainCategories').length ){
   $.getJSON('/items/main', function(response){
@@ -196,6 +189,30 @@ $( "#CategoryItems" ).on( "click", ".col-4", function(){
     });
 
 
+    $('#markAsCompleteButton').on('click', function(){
+      $.post("/complete_offer", { _token: $('input[name="_token"]').val(), offer_id: $('#offer_message_offer_id').val() },
+      function(response){
+        if(response == "success"){
+          toastr.info('Offer Marked as Complete!');
+          $("#offer_message_send").prop('disabled', true);
+        } else {
+          toastr.error('Failed to mark offer as complete');
+        }
+      });
+    });
+
+    $('#cancelTradeButton').on('click', function(){
+      $.post("/close_offer", { _token: $('input[name="_token"]').val(), offer_id: $('#offer_message_offer_id').val() },
+      function(response){
+        if(response == "success"){
+          toastr.info('Offer Has Been Cancelled');
+          $("#offer_message_send").prop('disabled', true);
+        } else {
+          toastr.error('Failed to cancel offer');
+        }
+      });
+    });
+
     $('#SendOfferButton').on('click', function(){
       $.post("/offer", { quantity: $('#offer_quantity').val(), price: $('#offer_price').val(), _token: $('input[name="_token"]').val(), lister_id: $('#lister_id').val(), currency: $('#offer_currency').val(), item_id: $('#offer_item_id').val() },
       function(response){
@@ -208,7 +225,7 @@ $( "#CategoryItems" ).on( "click", ".col-4", function(){
     });
 
 
-    $('#recieved_offers_list').on('click', 'a', function(e){
+    $('#recieved_offers_list, #sent_offers_list').on('click', 'a', function(e){
       if(e.target.dataset.id){
         $.post("/close_offer", { offer_id: e.target.dataset.id, _token: $('#csrf_header').attr('content') },
         function(response){
@@ -220,4 +237,38 @@ $( "#CategoryItems" ).on( "click", ".col-4", function(){
           }
         });
       }
+    });
+
+
+    $('#reviewTradeModal').on('show.bs.modal', function (event){
+      var button = $(event.relatedTarget);
+      var modal = $(this);
+
+      reviewer_id = $('#app').data('uid');
+      offer_id = button.data('offer_id');
+
+      //If the current users ID is equal to the creator ID, then the trade partner ID must be the recipient ID
+      if(reviewer_id == button.data('creator_id')){
+        partner_id = button.data('recipient_id');
+      }
+
+      //If the current users ID is equal to the recipient ID, then the trade partner ID must be the creator ID
+      if(reviewer_id == button.data('recipient_id')){
+        partner_id = button.data('creator_id');
+      }
+
+      modal.find('#reviewTradeTitle').text('Review Offer #' + button.data('offer_id'));
+
+    });
+
+
+    $('#reviewTradeButton').on('click', function(){
+      $.post("/review_offer", { reviewer_id: reviewer_id, user_id: partner_id, _token: $('input[name="_token"]').val(), type: $('#review_rep').val(), comment: $('#review_comment').val(), offer_id: offer_id },
+      function(response){
+        if(response == "success"){
+          toastr.info('Your review was succesfully saved!');
+        } else {
+          toastr.error('Failed to save review');
+        }
+      });
     });

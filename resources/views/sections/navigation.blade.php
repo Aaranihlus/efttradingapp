@@ -15,25 +15,25 @@
     <ul class="navbar-nav mr-auto">
       @guest
       <li class="nav-item">
-          <a class="nav-link" href="/login">Login</a>
+          <a class="nav-link" href="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
       </li>
 
       <li class="nav-item">
-          <a class="nav-link" href="/register">Sign Up</a>
+          <a class="nav-link" href="/register"><i class="fas fa-user-plus"></i> Sign Up</a>
       </li>
       @endguest
 
       @auth
       <li class="nav-item">
-        <a class="nav-link" style="color:#9a8866;" href="/profile">My Inventory</a>
+        <a class="nav-link" style="color:#9a8866;" href="/profile"><i class="fas fa-archive"></i> My Inventory</a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" style="color:#9a8866;" href="/offers">My Offers</a>
+        <a class="nav-link" style="color:#9a8866;" href="/offers"><i class="fas fa-envelope"></i> My Offers</a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" style="color:#9a8866;" href="/logout">Logout</a>
+        <a class="nav-link" style="color:#9a8866;" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
       </li>
       @endauth
     </ul>
