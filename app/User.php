@@ -9,7 +9,7 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    protected $fillable = ['username', 'email', 'password', 'discord_id', 'profile_picture'];
+    protected $fillable = ['username', 'password', 'discord_id', 'profile_picture'];
     protected $hidden = ['password', 'remember_token'];
 
     public function selling()
