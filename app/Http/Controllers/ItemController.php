@@ -47,8 +47,8 @@ class ItemController extends Controller
     //Returns item listings for a specific item id
     public function ItemListings($id)
     {
-      $sale_listings = UserSelling::ItemUser()->where('item_id', '=', $id)->where('user_id', '!=', auth()->user()->id)->orderBy('created_at', 'desc')->get();
-      $buy_listings = UserBuying::ItemUser()->where('item_id', '=', $id)->where('user_id', '!=', auth()->user()->id)->orderBy('created_at', 'desc')->get();
+      $sale_listings = UserSelling::ItemUser()->where('item_id', '=', $id)->orderBy('created_at', 'desc')->get();
+      $buy_listings = UserBuying::ItemUser()->where('item_id', '=', $id)->orderBy('created_at', 'desc')->get();
       return view('item.show', compact('sale_listings', 'buy_listings'));
     }
 

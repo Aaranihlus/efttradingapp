@@ -16,8 +16,7 @@
         <li class="list-group-item">
           <p>Offer #{{ $offer->id }}</p>
           <p>Status: {{ $offer->status }}</p>
-          <p>Created at: {{ $offer->created_at }}</p>
-          <p>Last update: {{ $offer->updated_at }}</p>
+          <p>Sent: {{ $offer->created_at->diffForHumans() }}</p>
         </li>
       </ul>
 
@@ -29,7 +28,8 @@
         </li>
         <li class="list-group-item">
           <button class="btn btn-primary" style="width:100%; margin-bottom:3px;" type="submit" data-toggle="modal" data-target="#OfferCompleteModal">Mark as Completed</button>
-          <button class="btn btn-primary" style="width:100%;" type="submit" data-toggle="modal" data-target="#OfferCancelModal">Cancel This Trade</button>
+          <button class="btn btn-primary" style="width:100%; margin-bottom:3px;" type="submit" data-toggle="modal" data-target="#OfferCancelModal">Cancel This Trade</button>
+          <button class="btn btn-primary" style="width:100%;" type="submit" data-toggle="modal" data-target="#OfferScamModal">Report a Scam</button>
         </li>
       </ul>
     </div>
@@ -42,6 +42,8 @@
         </li>
 
         <li class="list-group-item" id="offer_messages">
+          <div class="alert alert-info" role="alert"><strong>Note:</strong> All Messages are recorded</div>
+
           @if(count($offer_messages))
             @foreach($offer_messages as $message)
               <p>({{ $message->created_at->diffForHumans() }}) {{ $message->username }}: {{ $message->message }}</p>

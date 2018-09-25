@@ -8,16 +8,23 @@ class Offer extends Model
 {
   protected $fillable = ['creator_id', 'recipient_id', 'status'];
 
-  public function item()
-  {
-    return $this->hasManyThrough( 'App\Item', 'App\OfferItems',  'offer_id', 'id',  'id', 'item_id');
+  public function item(){
+    return $this->hasManyThrough( 'App\Item', 'App\OfferItems',  'offer_id', 'id', 'id', 'item_id');
   }
 
-
-  public function offer_info()
-  {
+  public function offer_info(){
     return $this->hasOne('App\OfferItems');
   }
+
+  public function reviews(){
+    return $this->hasMany('App\UserReputation');
+  }
+
+  public function reviewer(){
+    return $this->hasManyThrough('App\User', 'App\UserReputation', 'offer_id', 'id', 'id', 'reviewer_id');
+  }
+
+
 
 
 

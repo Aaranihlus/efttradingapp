@@ -6,7 +6,7 @@
   <ul class="list-group">
 
     <li class="list-group-item">
-      <h1>Login</h1>
+      <h1>//Authorisation</h1>
     </li>
 
     <form method="POST" method="/login">
@@ -15,9 +15,9 @@
 
       <li class="list-group-item">
         <div class="form-group row">
-          <label for="password" class="col-2 col-form-label">Email</label>
+          <label for="username" class="col-2 col-form-label">Username</label>
           <div class="col-10">
-            <input class="form-control" type="email" id="email" name="email" required>
+            <input class="form-control" type="username" id="email" name="username" required>
           </div>
         </div>
       </li>
