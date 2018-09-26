@@ -26,10 +26,9 @@ class AuthController extends Controller
       'admin' => 0
     ]);
 
+    //auth()->login($user);
 
-    auth()->login($user);
-
-    return redirect('/');
+    return redirect('/login');
   }
 
   public function register(){
