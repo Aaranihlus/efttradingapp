@@ -1,5 +1,5 @@
 <footer class="footer">
-  <p>All images are copyright of BATTLESTATE GAMES LIMITED</p>
+  <p>All images are copyright of BATTLESTATE GAMES LIMITED / Powered by EFT Trading Community</p>
 </footer>
 
 
