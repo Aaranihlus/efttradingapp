@@ -16,7 +16,7 @@ class UserController extends Controller
   public function myProfile(){
 
     if(!isset(auth()->user()->id)){
-      redirect('/register');
+      return redirect('/register');
     }
 
     $user = User::where('id', auth()->user()->id)->first();
