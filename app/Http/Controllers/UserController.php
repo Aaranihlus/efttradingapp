@@ -60,7 +60,7 @@ class UserController extends Controller
     $user_rep_neg = UserReputation::where('user_id', $user->id)->where('type', 'negative')->count();
     $user_total_rep = ($user_rep_pos - $user_rep_neg);
 
-    $completed_trades = Offer::with('reviews', 'reviewer')->where(function($query){
+    $completed_trades = Offer::with('reviews', 'reviewer')->where(function($query) use ($user){
       $query->where('creator_id', $user->id)
       ->orWhere('recipient_id', $user->id);
     })->where('status', 'Complete')->get();
