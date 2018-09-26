@@ -13,6 +13,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
     <ul class="navbar-nav mr-auto">
+      
       @guest
       <li class="nav-item">
           <a class="nav-link" href="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
@@ -48,7 +49,7 @@
 
       <ul class="navbar-nav navbar-right">
         <li class="nav-item">
-          <a class="nav-link" style="color:#9a8866;" href="https://discord.gg/QEyfcn"><i class="fab fa-discord"></i> Join Our Discord For Help</a>
+          <a class="nav-link" style="color:#9a8866;" href="https://discord.gg/QEyfcn"><i class="fab fa-discord"></i> Join Our Discord</a>
         </li>
       </ul>
 
