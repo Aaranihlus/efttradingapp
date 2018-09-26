@@ -36,6 +36,8 @@ class OfferController extends Controller
     //View a specific offer
     public function show(Offer $offer){
 
+      $offer = Offer::with('recipient', 'sender')->where('id', $offer->id)->first();
+
       if( ($offer->creator_id != auth()->user()->id) AND ($offer->recipient_id != auth()->user()->id) ){
         return redirect('/');
       }
@@ -49,7 +51,7 @@ class OfferController extends Controller
 
 
     public function index(){
-      $received_offers = Offer::SenderItem()->where('creator_id', '!=', auth()->user()->id)->where('status', 'Open')->get();
+      $received_offers = Offer::SenderItem()->where('recipient_id', auth()->user()->id)->where('status', 'Open')->get();
       $sent_offers = Offer::RecipientItem()->where('creator_id', auth()->user()->id)->where('status', 'Open')->get();
 
       $completed_offers = Offer::with('reviews')->where(function($query){

@@ -17,6 +17,8 @@
           <p>Offer #{{ $offer->id }}</p>
           <p>Status: {{ $offer->status }}</p>
           <p>Sent: {{ $offer->created_at->diffForHumans() }}</p>
+          <p>From: {{ $offer->sender->username }}</p>
+          <p>To: {{ $offer->recipient->username }}</p>
         </li>
       </ul>
 
@@ -57,10 +59,10 @@
           <div class="row">
             <div class="col-10">
               <form method="POST" action="/send_offer_message" id="New_Message_Form">
-                <input style="width:100%; height:100%;" type="hidden" name="offer_id" value="{{ $offer->id }}" id="offer_message_offer_id">
-                <input style="width:100%; height:100%;" type="hidden" name="username" value="{{ auth()->user()->username }}" id="offer_message_username">
-                <input style="width:100%; height:100%;" type="hidden" name="_token" value="{{ csrf_token() }}" id="offer_message_username">
-                <input style="width:100%; height:100%;" type="text" name="message" id="offer_message_message">
+                <input type="hidden" name="offer_id" value="{{ $offer->id }}" id="offer_message_offer_id">
+                <input type="hidden" name="username" value="{{ auth()->user()->username }}" id="offer_message_username">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}" id="offer_message_username">
+                <input style="width:100%;" type="text" name="message" id="offer_message_message">
               </form>
             </div>
             <div class="col-2">

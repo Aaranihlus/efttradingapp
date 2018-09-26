@@ -21,7 +21,9 @@ class AuthController extends Controller
       'username' => $request->username,
       'password' => bcrypt($request->password),
       'discord_id' => $request->discord_id,
-      'profile_picture' => $path
+      'profile_picture' => $path,
+      'verified' => 0,
+      'admin' => 0
     ]);
 
 
@@ -40,13 +42,21 @@ class AuthController extends Controller
   }
 
 
+
+
   public function loginuser(){
-    if(auth()->attempt(request(['username', 'password']))){
-      return redirect('/');
+    $user = User::where('username', request('username'))->first();
+    if($user->verified == 1){
+      if(auth()->attempt(request(['username', 'password']))){
+        return redirect('/');
+      } else {
+        return back()->withErrors(['message' => "Please check your credentials and try again."]);
+      }
     } else {
-      return back()->withErrors(['message' => "Please check your credentials and try again"]);
+      return back()->withErrors(['message' => "This account has not been verified."]);
     }
   }
+
 
 
   public function logout(){

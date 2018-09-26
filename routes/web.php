@@ -71,3 +71,5 @@ Route::post('/close_offer', 'OfferController@closeOffer');
 Route::post('/complete_offer', 'OfferController@completeOffer');
 
 Route::post('/review_offer', 'OfferController@reviewOffer');
+
+Route::get('/admin', 'AdminController@home');
