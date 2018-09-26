@@ -32,11 +32,27 @@
         <a class="nav-link" style="color:#9a8866;" href="/offers"><i class="fas fa-envelope"></i> My Offers</a>
       </li>
 
+      @if(auth()->user()->admin)
+        <li class="nav-item">
+          <a class="nav-link" style="color:#9a8866;" href="/admin"><i class="fas fa-user-shield"></i> Admin</a>
+        </li>
+      @endif
+
       <li class="nav-item">
         <a class="nav-link" style="color:#9a8866;" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
       </li>
+
       @endauth
-    </ul>
+
+      </ul>
+
+      <ul class="navbar-nav navbar-right">
+        <li class="nav-item">
+          <a class="nav-link" style="color:#9a8866;" href="https://discord.gg/QEyfcn"><i class="fab fa-discord"></i> Join Our Discord For Help</a>
+        </li>
+      </ul>
+
+
 
   </div>
 </div>

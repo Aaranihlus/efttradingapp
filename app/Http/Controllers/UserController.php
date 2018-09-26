@@ -14,6 +14,11 @@ class UserController extends Controller
 {
 
   public function myProfile(){
+
+    if(!isset(auth()->user()->id)){
+      redirect('/register');
+    }
+
     $user = User::where('id', auth()->user()->id)->first();
 
     $scam_reports = ScamReport::where('user_id', $user->id)->count();
@@ -51,15 +56,15 @@ class UserController extends Controller
     $user_total_rep = ($user_rep_pos - $user_rep_neg);
 
     $completed_trades = Offer::with('reviews', 'reviewer')->where(function($query){
-      $query->where('creator_id', auth()->user()->id)
-      ->orWhere('recipient_id', auth()->user()->id);
+      $query->where('creator_id', $user->id)
+      ->orWhere('recipient_id', $user->id);
     })->where('status', 'Complete')->get();
 
     $completed_trades_count = 0;
 
     foreach($completed_trades as $trade){
       foreach($trade->reviews as $review){
-        if($review->reviewer_id != auth()->user()->id){
+        if($review->reviewer_id != $user->id){
           $completed_trades_count += 1;
         }
       }
