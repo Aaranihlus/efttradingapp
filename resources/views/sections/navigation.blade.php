@@ -48,7 +48,7 @@
 
       <ul class="navbar-nav navbar-right">
         <li class="nav-item">
-          <a class="nav-link" style="color:#9a8866;" href="https://discord.gg/QEyfcn"><i class="fab fa-discord"></i> Join Our Discord For Help</a>
+          <a class="nav-link" style="color:#9a8866;" href="https://discord.gg/QEyfcn"><i class="fab fa-discord"></i> Join Our Discord</a>
         </li>
       </ul>
 
