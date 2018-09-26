@@ -46,6 +46,11 @@ class UserController extends Controller
 
 
   public function showProfile($username){
+
+    if(!isset(auth()->user()->id)){
+      return redirect('/register');
+    }
+
     $user = User::where('username', $username)->first();
     $sale_listings = UserSelling::ItemUser()->where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
     $buy_listings = UserBuying::ItemUser()->where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
