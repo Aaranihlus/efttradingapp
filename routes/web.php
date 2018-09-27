@@ -72,4 +72,10 @@ Route::post('/complete_offer', 'OfferController@completeOffer');
 
 Route::post('/review_offer', 'OfferController@reviewOffer');
 
+Route::post('/remove_listing', 'UserController@RemoveListing');
+
 Route::get('/admin', 'AdminController@home');
+
+Route::get('/listings/all', 'ListingsController@all');
+Route::get('/listings/buying', 'ListingsController@buying');
+Route::get('/listings/selling', 'ListingsController@selling');

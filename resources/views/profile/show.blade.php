@@ -52,7 +52,6 @@
               @endif
             @endforeach
           @endforeach
-
         </li>
 
       </ul>

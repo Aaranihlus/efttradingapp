@@ -37,19 +37,21 @@
     </div>
 
     <div class="col-6">
-      <ul class="list-group text-center">
+      <ul class="list-group">
 
-        <li class="list-group-item">
+        <li class="list-group-item text-center">
           <h2>Live Chat</h2>
         </li>
 
-        <li class="list-group-item" id="offer_messages">
-          <div class="alert alert-info" role="alert"><strong>Note:</strong> All Messages are recorded</div>
+        <li class="list-group-item" id="offer_messages" style="overflow-y:scroll; max-height:60vh;">
+          <div class="alert alert-info text-center" role="alert"><strong>Note:</strong> All Messages are recorded</div>
 
           @if(count($offer_messages))
+            <div class="text-left">
             @foreach($offer_messages as $message)
               <p>({{ $message->created_at->diffForHumans() }}) {{ $message->username }}: {{ $message->message }}</p>
             @endforeach
+          </div>
           @else
             <p id="no_messages_info">No Messages here yet</p>
           @endif

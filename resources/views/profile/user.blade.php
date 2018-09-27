@@ -37,32 +37,55 @@
         </li>
 
       </ul>
+
+
+      <li class="list-group-item text-center">
+        <p>Recent Reviews:</p>
+        @foreach($completed_trades as $trade)
+          @foreach($trade->reviews as $review)
+            @if($review->reviewer_id != $user->id)
+              <p>({{ $review->created_at->diffForHumans() }}) <a href="/profile/{{ $review->reviewer->username }}">{{ $review->reviewer->username }}</a>: {{ $review->comment }}
+              @if($review->type == "positive")
+                <i style="color:green" class="fas fa-thumbs-up"> +</i>
+              @else
+                <i style="color:red" class="fas fa-thumbs-down"> -</i>
+              @endif
+              </p>
+            @endif
+          @endforeach
+        @endforeach
+      </li>
+
+
+
+
     </div>
 
-    <div class="col-4">
+    <div class="col-4" id="active_listings_list">
       <ul class="list-group text-center">
         <li class="list-group-item">
-          <h2>Recent Reviews</h2>
+          <h2>My Active Listings</h2>
         </li>
 
-        <li class="list-group-item">
-          @foreach($completed_trades as $trade)
+        @foreach($all_listings as $k => $listing)
+        <li class="list-group-item" id="pos_in_list_{{ $k }}">
+          <div class="row">
 
-            @foreach($trade->reviews as $review)
+            <div class="col-6">
+              <img class="img-fluid mx-auto d-block" style="max-height:8vh;" alt="{{ $listing->item->name }} Image" src="../images/{{ $listing->item->main_category }}/{{ $listing->item->image }}">
+            </div>
 
-              @if($review->reviewer_id != auth()->user()->id)
+            <div class="col-4">
+              <p>{{ $listing->type }}ing {{ $listing->quantity }}x <a href="/item/{{ $listing->item->id }}">{{ $listing->item->name }}</a> for {{ number_format($listing->price) }} {{ $listing->currency }} each</p>
+            </div>
 
-                <p>({{ $review->created_at->diffForHumans() }}) {{ $review->reviewer->username }}: {{ $review->comment }}
-                @if($review->type == "positive")
-                  <i style="color:green" class="fas fa-thumbs-up"> +</i>
-                @else
-                  <i style="color:red" class="fas fa-thumbs-down"> -</i>
-                @endif
-                </p>
-              @endif
-            @endforeach
-          @endforeach
+            <div class="col-2">
+              <a href="#" data-item_id="{{ $listing->item->id }}" data-listing_type="{{ $listing->type }}" data-listing_id="{{ $listing->id }}" data-pos="{{ $k }}">&times; Remove</a>
+            </div>
+
+          </div>
         </li>
+        @endforeach
 
       </ul>
     </div>
@@ -73,7 +96,7 @@
       <ul class="list-group">
 
         <li class="list-group-item text-center">
-          <h2>Your Items</h2>
+          <h2>Manage Items</h2>
         </li>
         <li class="list-group-item">Main Categories</li>
         <li class="list-group-item p-0" id="MainCategoriesContainer">
