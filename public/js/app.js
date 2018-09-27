@@ -11152,11 +11152,24 @@ toastr.options = {
 
 var selected_main_category = "";
 
+$("#specific_item_view").on("click", function (e) {
+  $('#item_view_container').show();
+});
+
 if ($('#MainCategories').length) {
   $.getJSON('/items/main', function (response) {
     $.each(response, function (k, v) {
       $('#MainCategories').append('<button class="btn btn-primary" data-type="' + v + '">' + v.replace('_', ' ') + '</button>');
     });
+  });
+};
+
+if ($('#offer_message_send').length) {
+  document.addEventListener('keydown', function (event) {
+    if (event.keyCode == 13) {
+      event.preventDefault();
+      $('#offer_message_send').click();
+    }
   });
 };
 
@@ -11179,11 +11192,11 @@ $("#SubCategories").on("click", "button", function () {
   $.getJSON('/items/subcat/' + $(this).data("type") + '/' + selected_main_category.replace('%20', ' '), function (response) {
     if ($('#SelectedItemInfo').length == 0) {
       $.each(response, function (k, v) {
-        $('#CategoryItems').append('<a class="col-4 mb-5" href="/item/' + v.id + '"><p class="text-center text-truncate">' + v.name + '</p><div class="image-block" style="background-image:url(../images/' + v.main_category + '/' + v.image + ');"></div></a>');
+        $('#CategoryItems').append('<a class="col-3 mb-5" href="/item/' + v.id + '"><p class="text-center text-truncate">' + v.name + '</p><div class="image-block" style="background-image:url(../images/' + v.main_category + '/' + v.image + ');"></div></a>');
       });
     } else {
       $.each(response, function (k, v) {
-        $('#CategoryItems').append('<div class="col-4 mb-5" data-id="' + v.id + '" href="/item/' + v.id + '"><p class="text-center">' + v.name + '</p><div class="image-block" style="background-image:url(../images/' + v.main_category + '/' + v.image + ');"></div></div>');
+        $('#CategoryItems').append('<div class="col-3 mb-5" data-id="' + v.id + '" href="/item/' + v.id + '"><p class="text-center">' + v.name + '</p><div class="image-block" style="background-image:url(../images/' + v.main_category + '/' + v.image + ');"></div></div>');
       });
     }
   });
@@ -11332,6 +11345,18 @@ $('#reviewTradeButton').on('click', function () {
       toastr.info('Your review was succesfully saved!');
     } else {
       toastr.error('Failed to save review');
+    }
+  });
+});
+
+$('#active_listings_list').on('click', 'a', function (e) {
+
+  $.post("/remove_listing", { _token: $('input[name="_token"]').val(), item_id: e.currentTarget.dataset.item_id, type: e.currentTarget.dataset.listing_type, listing_id: e.currentTarget.dataset.listing_id }, function (response) {
+    if (response == "success") {
+      $('#pos_in_list_' + e.currentTarget.dataset.pos).remove();
+      toastr.info('Listing Removed');
+    } else {
+      toastr.error('Failed to remove listing');
     }
   });
 });

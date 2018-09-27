@@ -26,6 +26,23 @@ class UserController extends Controller
     $user_rep_neg = UserReputation::where('user_id', $user->id)->where('type', 'negative')->count();
     $user_total_rep = ($user_rep_pos - $user_rep_neg);
 
+    $sale_listings = UserSelling::ItemUser()->where('user_id', $user->id)->where('quantity', '>', '0')->orderBy('created_at', 'desc')->get();
+    $buy_listings = UserBuying::ItemUser()->where('user_id', $user->id)->where('quantity', '>', '0')->orderBy('created_at', 'desc')->get();
+
+    $all_listings = collect();
+
+    foreach ($sale_listings as $sale){
+      $sale->type = "sell";
+      $all_listings->push($sale);
+    }
+
+    foreach ($buy_listings as $buy){
+      $buy->type = "buy";
+      $all_listings->push($buy);
+    }
+
+    $all_listings->sortBy('created_at');
+
     $completed_trades = Offer::with('reviews', 'reviewer')->where(function($query){
       $query->where('creator_id', auth()->user()->id)
       ->orWhere('recipient_id', auth()->user()->id);
@@ -41,7 +58,7 @@ class UserController extends Controller
       }
     }
 
-    return view('profile.user', compact('user', 'scam_reports', 'user_total_rep', 'completed_trades', 'completed_trades_count'));
+    return view('profile.user', compact('user', 'scam_reports', 'user_total_rep', 'completed_trades', 'completed_trades_count', 'all_listings'));
   }
 
 
@@ -52,8 +69,8 @@ class UserController extends Controller
     }
 
     $user = User::where('username', $username)->first();
-    $sale_listings = UserSelling::ItemUser()->where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
-    $buy_listings = UserBuying::ItemUser()->where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
+    $sale_listings = UserSelling::ItemUser()->where('user_id', $user->id)->where('quantity', '>', '0')->orderBy('created_at', 'desc')->get();
+    $buy_listings = UserBuying::ItemUser()->where('user_id', $user->id)->where('quantity', '>', '0')->orderBy('created_at', 'desc')->get();
 
     $scam_reports = ScamReport::where('user_id', $user->id)->count();
     $user_rep_pos = UserReputation::where('user_id', $user->id)->where('type', 'positive')->count();
@@ -79,16 +96,6 @@ class UserController extends Controller
   }
 
 
-  public function UserSellingItem($item){
-    return UserSelling::where('item_id', $item)->where('user_id', auth()->user()->id)->get();
-  }
-
-
-  public function UserBuyingItem($item){
-    return UserBuying::where('item_id', $item)->where('user_id', auth()->user()->id)->get();
-  }
-
-
   public function UpdateBuying(Request $request){
     $buying = UserBuying::updateOrCreate([
       'item_id' => request('item_id'),
@@ -104,6 +111,21 @@ class UserController extends Controller
     }else{
       return response()->json("false");
     }
+  }
+
+  public function RemoveListing(Request $request)
+  {
+    $id = $request->listing_id;
+    if($request->type == "sell"){
+      $listing = UserSelling::find($id);
+    } else {
+      $listing = UserBuying::find($id);
+    }
+
+    $listing->quantity = 0;
+    $listing->save();
+
+    return response()->json("success");
   }
 
 

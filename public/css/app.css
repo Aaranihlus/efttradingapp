@@ -14551,8 +14551,8 @@ html {
   width: 100%;
   position: relative;
   background: url() 50% 50% no-repeat;
-  min-height: 12vh;
-  background-size: cover;
+  min-height: 8vh;
+  background-size: contain;
   border-radius: 8px;
 }
 

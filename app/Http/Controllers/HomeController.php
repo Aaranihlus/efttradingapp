@@ -13,8 +13,8 @@ class HomeController extends Controller
 {
   public function index()
   {
-    $buy_listings = UserBuying::ItemUser()->orderBy('created_at', 'desc')->limit(10)->get();
-    $sale_listings = UserSelling::ItemUser()->orderBy('created_at', 'desc')->limit(10)->get();
+    $buy_listings = UserBuying::ItemUser()->where('quantity', '>', '0')->orderBy('created_at', 'desc')->limit(10)->get();
+    $sale_listings = UserSelling::ItemUser()->where('quantity', '>', '0')->orderBy('created_at', 'desc')->limit(10)->get();
 
     return view('home.index', compact('buy_listings', 'sale_listings'));
   }
