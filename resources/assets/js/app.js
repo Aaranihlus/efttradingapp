@@ -76,7 +76,7 @@ $( "#SubCategories" ).on( "click", "button", function(){
 });
 
 
-$( "#CategoryItems" ).on( "click", ".col-4", function(){
+$( "#CategoryItems" ).on( "click", ".col-3", function(){
   $('#SelectedItemContainer').show();
   var SelectedItemImg = $(this).find('.image-block').css('background-image');
   var ImgPath = SelectedItemImg.replace(/(?:^url\(["']?|["']?\)$)/g, "");

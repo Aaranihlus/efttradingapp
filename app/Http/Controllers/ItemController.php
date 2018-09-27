@@ -32,7 +32,7 @@ class ItemController extends Controller
     public function MainCategories()
     {
        return Cache::remember('all_main_categories', 60, function (){
-         return Item::distinct('main_category')->where('main_category', '!=', "Ammunition")->pluck('main_category');
+         return Item::distinct('main_category')->where('main_category', '!=', "Armband")->pluck('main_category');
        });
     }
 
