@@ -21,7 +21,7 @@
         <li class="list-group-item" id="offer-{{$offer->id}}">
           <div class="row">
             <div class="col-4">
-              <p>{{ $offer->sender->username }} sent you an offer ({{ $offer->created_at->diffForHumans() }})</p>
+              <p>Offer #{{$offer->id}} - {{ $offer->sender->username }} sent you an offer ({{ $offer->created_at->diffForHumans() }})</p>
             </div>
             <div class="col-5">
               <p>{{ $offer->offer_info->quantity }}x {{ $offer->item[0]->name }} for {{ number_format($offer->offer_info->price) }} {{ $offer->offer_info->currency }} each</p>
@@ -63,7 +63,7 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-4">
-              <p>You sent an offer to {{ $offer->recipient->username }} ({{ $offer->created_at->diffForHumans() }})</p>
+              <p>Offer #{{$offer->id}} - You sent an offer to {{ $offer->recipient->username }} ({{ $offer->created_at->diffForHumans() }})</p>
             </div>
             <div class="col-5">
               <p>{{ $offer->offer_info->quantity }}x {{ $offer->item[0]->name }} for {{ number_format($offer->offer_info->price) }} {{ $offer->offer_info->currency }} each</p>
@@ -107,7 +107,7 @@
         <li class="list-group-item" id="offer-{{$offer->id}}">
           <div class="row">
             <div class="col-8">
-              <p>{{ $offer->offer_info->quantity }}x {{ $offer->item[0]->name }} for {{ number_format($offer->offer_info->price) }} {{ $offer->offer_info->currency }} each</p>
+              <p>Offer #{{$offer->id}} - {{ $offer->offer_info->quantity }}x {{ $offer->item[0]->name }} for {{ number_format($offer->offer_info->price) }} {{ $offer->offer_info->currency }} each</p>
             </div>
             <div class="col-4">
               @if($offer->canComment == true)

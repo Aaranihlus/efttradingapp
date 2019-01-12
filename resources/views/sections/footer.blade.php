@@ -5,6 +5,10 @@
 
 
 
+
+
+
+
 <!-- Offer Modal -->
 <div class="modal fade" id="OfferModal" tabindex="-1" role="dialog" aria-labelledby="OfferModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -119,7 +123,9 @@
       <div class="modal-body">
         <form id="OfferScamForm">
           <label>This will cancel the current trade for you and your trade partner.</label>
-          <label>Your trade partner will have their reputation reduced and their number of scam reports will increase</label>
+          <label>Your report will be reviewed by an administrator. Please explain your report in the box below and provide links to any evidence have.</label>
+          <input type="hidden" value="" id="suspect_id">
+          <textarea id="scam_message">Describe your issue...</textarea>
         </form>
       </div>
       <div class="modal-footer">

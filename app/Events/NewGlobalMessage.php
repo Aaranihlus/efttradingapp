@@ -10,24 +10,23 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class NewMessage implements ShouldBroadcast
+class NewGlobalMessage implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $offer_id;
     public $username;
     public $message;
+    public $time;
 
-    public function __construct($offer_id, $username, $message)
+    public function __construct($username, $message, $time)
     {
-        $this->offer_id = $offer_id;
-        $this->username = $username;
-        $this->message = $message;
-        $this->dontBroadcastToCurrentUser();
+      $this->username = $username;
+      $this->message = $message;
+      $this->time = $time;
     }
 
     public function broadcastOn()
     {
-        return new Channel('offers' . $this->offer_id);
+        return new PresenceChannel('global_chat');
     }
 }

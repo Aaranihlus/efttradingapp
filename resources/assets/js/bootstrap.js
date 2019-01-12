@@ -30,10 +30,41 @@ let notification = new Audio('../audio/beep.mp3');
 
 let user_id = $('#app').data('uid');
 
+
+
+if(window.location.pathname == "/offers"){
+  localStorage.newOffers = "false";
+}
+
+if(localStorage.newOffers == "true"){
+  $('#new_offer_icon').append('<i class="fas fa-exclamation-circle"></i></span>');
+}
+
 //Listen for new offer notifications
 window.Echo.private('new_offers_for_' + user_id).listen('NewOfferNotification', e => {
   toastr.info('You have recieved a new offer');
+  localStorage.newOffers = "true";
+
+  if($('#new_offer_icon').html() == ""){
+    $('#new_offer_icon').append('<i class="fas fa-exclamation-circle"></i></span>');
+  }
+
   notification.play();
+});
+
+
+//Listen for offer messages
+window.Echo.private('new_message_for_user_' + user_id).listen('NewOfferMessage', e => {
+  if(e.offer_id != $('#offer_message_offer_id').val()){
+    toastr.info(e.username + ' sent you a new message (Offer #'+ e.offer_id +')');
+    localStorage.newOffers = "true";
+
+    if($('#new_offer_icon').html() == ""){
+      $('#new_offer_icon').append('<i class="fas fa-exclamation-circle"></i></span>');
+    }
+
+    notification.play();
+  }
 });
 
 
@@ -46,6 +77,8 @@ if ($('#offer_messages').length){
     if(e.message == "This Trade has been marked as complete" || e.message == "This Trade has been cancelled"){
       $('#offer_messages').append("<p>" + e.message + "</p>");
       $("#offer_message_send").prop('disabled', true);
+      $("#openCompleteModal").prop('disabled', true);
+      $("#openCancelModal").prop('disabled', true);
       notification.play();
     } else {
       $('#offer_messages').append("<p>" + e.username + ": " + e.message + "</p>");
@@ -67,4 +100,67 @@ $('#offer_message_send').on('click', function(e){
       $('#no_messages_info').remove();
     }
   });
+});
+
+
+$('#g_chat_send').on('click', function(e){
+  e.preventDefault();
+  $.post("/send_global_chat_message", $( "#global_chat_form" ).serialize());
+});
+
+
+
+//Global Chat
+let global_chat = window.Echo.join('global_chat');
+let user_count = 0
+let messages = [];
+if(sessionStorage.globalMessages != undefined){
+  messages = JSON.parse(sessionStorage.globalMessages);
+}
+
+if(sessionStorage.globalChatOpen == undefined){
+  sessionStorage.globalChatOpen = "false";
+}
+
+if(sessionStorage.globalChatOpen == "false"){
+  $('#global_chat_inner').css( "display", "none" );
+}
+
+$('#open_global_chat').on('click', function(e){
+  $('#global_chat_inner').toggle( "fast", "swing" );
+});
+
+//When the user joins
+global_chat.here(users => {
+  user_count = users.length;
+
+    messages.forEach(function(message){
+      $('#global_chat_messages').append('<p class="chat_message">(' + new Date(message.time.date) + ') <a href="/profile/' + message.username + '">' + message.username + '</a>: ' + message.message + '</p>');
+    });
+
+  users.forEach(function(user){
+    $('#global_chat_users').append('<p class="chat_user"><a id="user'+ user.id +'" href="/profile/' + user.username + '">' + user.username + '</a></p>');
+    $('#user_count').text(user_count);
+  });
+});
+
+//When another user joins
+global_chat.joining(user => {
+  $('#global_chat_users').append('<p class="chat_user"><a id="user'+ user.id +'" href="/profile/' + user.username + '">' + user.username + '</a></p>');
+  user_count += 1;
+  $('#user_count').text(user_count);
+});
+
+//When another user leaves
+global_chat.leaving(user => {
+  $('#user' + user.id).remove();
+  user_count -= 1;
+  $('#user_count').text(user_count);
+});
+
+//When a new message is recieved
+global_chat.listen('NewGlobalMessage', event => {
+  messages.push(event);
+  sessionStorage.globalMessages = JSON.stringify(messages);
+  $('#global_chat_messages').append('<p class="chat_message">(' + new Date(event.time.date) + ') <a href="/profile/' + event.username + '">' + event.username + '</a>: ' + event.message + '</p>');
 });

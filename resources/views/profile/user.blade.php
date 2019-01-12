@@ -36,7 +36,11 @@
           <p>Scam Reports: <span>{{ $scam_reports }}</span></p>
         </li>
 
-      </ul>
+
+
+      <li class="list-group-item text-center">
+        <a href="#"><i class="fas fa-edit"></i> Edit My Info</a>
+      </li>
 
 
       <li class="list-group-item text-center">
@@ -56,6 +60,8 @@
         @endforeach
       </li>
 
+      </ul>
+
 
 
 
@@ -72,15 +78,19 @@
           <div class="row">
 
             <div class="col-6">
-              <img class="img-fluid mx-auto d-block" style="max-height:8vh;" alt="{{ $listing->item->name }} Image" src="../images/{{ $listing->item->main_category }}/{{ $listing->item->image }}">
+              <img class="img-fluid mx-auto d-block" style="max-height:6vh;" alt="{{ $listing->item->name }} Image" src="../images/{{ $listing->item->main_category }}/{{ $listing->item->image }}">
             </div>
 
             <div class="col-4">
-              <p>{{ $listing->type }}ing {{ $listing->quantity }}x <a href="/item/{{ $listing->item->id }}">{{ $listing->item->name }}</a> for {{ number_format($listing->price) }} {{ $listing->currency }} each</p>
+              <p>{{ $listing->type }}ing
+                <span style="color:white;" id="quantity_pos_{{ $k }}">{{ $listing->quantity }}</span>x
+                <a href="/item/{{ $listing->item->id }}">{{ $listing->item->name }}</a>for
+                <span style="color:white;" id="price_pos_{{ $k }}">{{ number_format($listing->price) }}</span> <span style="color:white;" id="currency_pos_{{ $k }}">{{ $listing->currency }}</span> each</p>
             </div>
 
             <div class="col-2">
-              <a href="#" data-item_id="{{ $listing->item->id }}" data-listing_type="{{ $listing->type }}" data-listing_id="{{ $listing->id }}" data-pos="{{ $k }}">&times; Remove</a>
+              <a href="#" data-item_id="{{ $listing->item->id }}" data-listing_type="{{ $listing->type }}" data-listing_id="{{ $listing->id }}" data-pos="{{ $k }}"><i class="fas fa-times"></i> Remove</a>
+              <a href="#" data-item_id="{{ $listing->item->id }}" data-listing_type="{{ $listing->type }}" data-listing_id="{{ $listing->id }}" data-pos="{{ $k }}"><i class="fas fa-edit"></i> Edit</a>
             </div>
 
           </div>

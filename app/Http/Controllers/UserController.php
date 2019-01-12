@@ -22,8 +22,19 @@ class UserController extends Controller
     $user = User::where('id', auth()->user()->id)->first();
 
     $scam_reports = ScamReport::where('user_id', $user->id)->count();
-    $user_rep_pos = UserReputation::where('user_id', $user->id)->where('type', 'positive')->count();
-    $user_rep_neg = UserReputation::where('user_id', $user->id)->where('type', 'negative')->count();
+    $user_reps = UserReputation::where('user_id', $user->id)->get();
+
+    $user_rep_pos = 0;
+    $user_rep_neg = 0;
+
+    foreach($user_reps as $rep){
+      if($rep->type == "positive"){
+        $user_rep_pos += 1;
+      } else {
+        $user_rep_neg += 1;
+      }
+    }
+
     $user_total_rep = ($user_rep_pos - $user_rep_neg);
 
     $sale_listings = UserSelling::ItemUser()->where('user_id', $user->id)->where('quantity', '>', '0')->orderBy('created_at', 'desc')->get();
@@ -96,22 +107,6 @@ class UserController extends Controller
   }
 
 
-  public function UpdateBuying(Request $request){
-    $buying = UserBuying::updateOrCreate([
-      'item_id' => request('item_id'),
-      'user_id' => auth()->user()->id
-    ],[
-      'price' => request('price'),
-      'quantity' => request('quantity'),
-      'currency' => request('currency')
-    ]);
-
-    if($buying){
-      return response()->json("true");
-    }else{
-      return response()->json("false");
-    }
-  }
 
   public function RemoveListing(Request $request)
   {
@@ -129,6 +124,7 @@ class UserController extends Controller
   }
 
 
+  //Update Selling Listing
   public function UpdateSelling(Request $request){
     $selling = UserSelling::updateOrCreate([
       'item_id' => request('item_id'),
@@ -140,6 +136,24 @@ class UserController extends Controller
     ]);
 
     if($selling){
+      return response()->json("true");
+    }else{
+      return response()->json("false");
+    }
+  }
+
+  //Update Buying Listing
+  public function UpdateBuying(Request $request){
+    $buying = UserBuying::updateOrCreate([
+      'item_id' => request('item_id'),
+      'user_id' => auth()->user()->id
+    ],[
+      'price' => request('price'),
+      'quantity' => request('quantity'),
+      'currency' => request('currency')
+    ]);
+
+    if($buying){
       return response()->json("true");
     }else{
       return response()->json("false");

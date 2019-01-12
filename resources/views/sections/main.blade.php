@@ -10,14 +10,20 @@
   <link rel="stylesheet" href="../css/app.css">
 </head>
 
-<body>
-  <div class="container-fluid p-0" id="app" @auth data-uid="{{ auth()->user()->id }}" @endauth>
-    @include ('sections.navigation')
-    @yield ('content')
-    @include ('sections.footer')
-  </div>
+  <body>
+    <div class="container-fluid p-0" id="app" @auth data-uid="{{ auth()->user()->id }}" @endauth>
+
+      @include ('sections.navigation')
+
+      @yield ('content')
+
+      @include ('sections.globalchat')
+
+      @include ('sections.footer')
+    </div>
 
   <script src="../js/app.js"></script>
-</body>
+
+  </body>
 
 </html>

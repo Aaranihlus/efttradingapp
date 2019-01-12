@@ -79,3 +79,6 @@ Route::get('/admin', 'AdminController@home');
 Route::get('/listings/all', 'ListingsController@all');
 Route::get('/listings/buying', 'ListingsController@buying');
 Route::get('/listings/selling', 'ListingsController@selling');
+
+
+Route::post('/send_global_chat_message', 'GlobalChatController@store');

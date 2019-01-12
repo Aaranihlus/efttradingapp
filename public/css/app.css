@@ -14516,6 +14516,27 @@ button.toast-close-button {
   src: url(/fonts/bender.otf?1c59c05425947b48bc99fe1b85aba3fc);
 }
 
+#global_chat_container {
+  width: 40%;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin-right: 3vh;
+  margin-bottom: 4vh;
+}
+
+.chat_user {
+  line-height: 1;
+  margin-bottom: 3px;
+  color: white;
+}
+
+.chat_message {
+  line-height: 1.1;
+  margin-bottom: 3px;
+  text-align: left;
+}
+
 html {
   position: relative;
   min-height: 100%;

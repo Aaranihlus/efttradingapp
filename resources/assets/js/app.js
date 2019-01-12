@@ -20,6 +20,10 @@ toastr.options = {
   "hideMethod": "fadeOut"
 };
 
+$(function () {
+  $('[data-toggle="popover"]').popover()
+})
+
 var selected_main_category = "";
 
 $( "#specific_item_view" ).on( "click", function(e){
@@ -34,14 +38,20 @@ if ($('#MainCategories').length ){
   });
 };
 
-if($('#offer_message_send').length){
-  document.addEventListener('keydown', function(event) {
-      if(event.keyCode == 13){
-        event.preventDefault();
-        $('#offer_message_send').click();
-      }
-  });
-};
+
+
+
+
+document.addEventListener('keydown', function(event) {
+  if(event.keyCode == 13){
+    event.preventDefault();
+    if($('#offer_message_send').length){
+      $('#offer_message_send').click();
+    } else {
+      $('#g_chat_send').click();
+    }
+  };
+});
 
 
 
@@ -209,6 +219,8 @@ $( "#CategoryItems" ).on( "click", ".col-3", function(){
         if(response == "success"){
           toastr.info('Offer Marked as Complete!');
           $("#offer_message_send").prop('disabled', true);
+          $("#openCompleteModal").prop('disabled', true);
+          $("#openCancelModal").prop('disabled', true);
         } else {
           toastr.error('Failed to mark offer as complete');
         }
@@ -221,6 +233,8 @@ $( "#CategoryItems" ).on( "click", ".col-3", function(){
         if(response == "success"){
           toastr.info('Offer Has Been Cancelled');
           $("#offer_message_send").prop('disabled', true);
+          $("#openCompleteModal").prop('disabled', true);
+          $("#openCancelModal").prop('disabled', true);
         } else {
           toastr.error('Failed to cancel offer');
         }
@@ -272,7 +286,6 @@ $( "#CategoryItems" ).on( "click", ".col-3", function(){
       }
 
       modal.find('#reviewTradeTitle').text('Review Offer #' + button.data('offer_id'));
-
     });
 
 
@@ -291,15 +304,19 @@ $( "#CategoryItems" ).on( "click", ".col-3", function(){
 
     $('#active_listings_list').on('click', 'a', function(e){
 
-      $.post("/remove_listing", { _token: $('input[name="_token"]').val(), item_id: e.currentTarget.dataset.item_id, type: e.currentTarget.dataset.listing_type, listing_id: e.currentTarget.dataset.listing_id },
+      if(e.target.innerText == "Remove"){
+        $.post("/remove_listing", { _token: $('input[name="_token"]').val(), item_id: e.currentTarget.dataset.item_id, type: e.currentTarget.dataset.listing_type, listing_id: e.currentTarget.dataset.listing_id },
+        function(response){
+          if(response == "success"){
+            $('#pos_in_list_' + e.currentTarget.dataset.pos).remove();
+            toastr.info('Listing Removed');
+          } else {
+            toastr.error('Failed to remove listing');
+          }
+        });
+      };
 
-      function(response){
-        if(response == "success"){
-          $('#pos_in_list_' + e.currentTarget.dataset.pos).remove();
-          toastr.info('Listing Removed');
-        } else {
-          toastr.error('Failed to remove listing');
-        }
-      });
+      if(e.target.innerText == "Edit"){
 
+      };
     });

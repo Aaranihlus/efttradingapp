@@ -29,8 +29,8 @@
           <h2>Offer Actions</h2>
         </li>
         <li class="list-group-item">
-          <button class="btn btn-primary" style="width:100%; margin-bottom:3px;" type="submit" data-toggle="modal" data-target="#OfferCompleteModal">Mark as Completed</button>
-          <button class="btn btn-primary" style="width:100%; margin-bottom:3px;" type="submit" data-toggle="modal" data-target="#OfferCancelModal">Cancel This Trade</button>
+          <button class="btn btn-primary" style="width:100%; margin-bottom:3px;" type="submit" id="openCompleteModal" data-toggle="modal" data-target="#OfferCompleteModal">Mark as Completed</button>
+          <button class="btn btn-primary" style="width:100%; margin-bottom:3px;" type="submit" id="openCancelModal" data-toggle="modal" data-target="#OfferCancelModal">Cancel This Trade</button>
           <button class="btn btn-primary" style="width:100%;" type="submit" data-toggle="modal" data-target="#OfferScamModal">Report a Scam</button>
         </li>
       </ul>
@@ -63,6 +63,15 @@
               <form method="POST" action="/send_offer_message" id="New_Message_Form">
                 <input type="hidden" name="offer_id" value="{{ $offer->id }}" id="offer_message_offer_id">
                 <input type="hidden" name="username" value="{{ auth()->user()->username }}" id="offer_message_username">
+
+                @if(auth()->user()->id == $offer->sender->id)
+                  <input type="hidden" name="message_recipient_id" value="{{ $offer->recipient->id }}" id="message_recipient_id">
+                @endif
+
+                @if(auth()->user()->id == $offer->recipient->id)
+                  <input type="hidden" name="message_recipient_id" value="{{ $offer->sender->id }}" id="message_recipient_id">
+                @endif
+
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" id="offer_message_username">
                 <input style="width:100%;" type="text" name="message" id="offer_message_message">
               </form>

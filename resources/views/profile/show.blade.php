@@ -68,7 +68,7 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-5">
-                <img class="img-fluid" src="../images/{{ $listing->item->main_category }}/{{ $listing->item->image }}">
+                <img class="img-fluid" style="max-height: 8vh;" src="../images/{{ $listing->item->main_category }}/{{ $listing->item->image }}">
               </div>
               <div class="col-5">
                 <p><a href="/profile/{{ $listing->user->username }}">{{ $listing->user->username }}</a> is selling {{ $listing->quantity }}x <a href="/item/{{ $listing->item->id }}">{{ $listing->item->name }}</a> for {{ $listing->price }} {{ $listing->currency }} each</p>
@@ -117,7 +117,7 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-5">
-                <img class="img-fluid" src="../images/{{ $listing->item->main_category }}/{{ $listing->item->image }}">
+                <img class="img-fluid" style="max-height: 8vh;" src="../images/{{ $listing->item->main_category }}/{{ $listing->item->image }}">
               </div>
               <div class="col-5">
                 <p><a href="/profile/{{ $listing->user->username }}">{{$listing->user->username }}</a> wants to buy {{ $listing->quantity }}x <a href="/item/{{ $listing->item->id }}">{{$listing->item->name}}</a> for {{ $listing->price }} {{ $listing->currency }} each</p>

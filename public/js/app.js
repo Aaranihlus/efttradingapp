@@ -11150,6 +11150,10 @@ toastr.options = {
   "hideMethod": "fadeOut"
 };
 
+$(function () {
+  $('[data-toggle="popover"]').popover();
+});
+
 var selected_main_category = "";
 
 $("#specific_item_view").on("click", function (e) {
@@ -11164,14 +11168,16 @@ if ($('#MainCategories').length) {
   });
 };
 
-if ($('#offer_message_send').length) {
-  document.addEventListener('keydown', function (event) {
-    if (event.keyCode == 13) {
-      event.preventDefault();
+document.addEventListener('keydown', function (event) {
+  if (event.keyCode == 13) {
+    event.preventDefault();
+    if ($('#offer_message_send').length) {
       $('#offer_message_send').click();
+    } else {
+      $('#g_chat_send').click();
     }
-  });
-};
+  };
+});
 
 $("#MainCategories").on("click", "button", function (e) {
   $('#SubCatHeader').show();
@@ -11202,7 +11208,7 @@ $("#SubCategories").on("click", "button", function () {
   });
 });
 
-$("#CategoryItems").on("click", ".col-4", function () {
+$("#CategoryItems").on("click", ".col-3", function () {
   $('#SelectedItemContainer').show();
   var SelectedItemImg = $(this).find('.image-block').css('background-image');
   var ImgPath = SelectedItemImg.replace(/(?:^url\(["']?|["']?\)$)/g, "");
@@ -11279,6 +11285,8 @@ $('#markAsCompleteButton').on('click', function () {
     if (response == "success") {
       toastr.info('Offer Marked as Complete!');
       $("#offer_message_send").prop('disabled', true);
+      $("#openCompleteModal").prop('disabled', true);
+      $("#openCancelModal").prop('disabled', true);
     } else {
       toastr.error('Failed to mark offer as complete');
     }
@@ -11290,6 +11298,8 @@ $('#cancelTradeButton').on('click', function () {
     if (response == "success") {
       toastr.info('Offer Has Been Cancelled');
       $("#offer_message_send").prop('disabled', true);
+      $("#openCompleteModal").prop('disabled', true);
+      $("#openCancelModal").prop('disabled', true);
     } else {
       toastr.error('Failed to cancel offer');
     }
@@ -11351,14 +11361,18 @@ $('#reviewTradeButton').on('click', function () {
 
 $('#active_listings_list').on('click', 'a', function (e) {
 
-  $.post("/remove_listing", { _token: $('input[name="_token"]').val(), item_id: e.currentTarget.dataset.item_id, type: e.currentTarget.dataset.listing_type, listing_id: e.currentTarget.dataset.listing_id }, function (response) {
-    if (response == "success") {
-      $('#pos_in_list_' + e.currentTarget.dataset.pos).remove();
-      toastr.info('Listing Removed');
-    } else {
-      toastr.error('Failed to remove listing');
-    }
-  });
+  if (e.target.innerText == "Remove") {
+    $.post("/remove_listing", { _token: $('input[name="_token"]').val(), item_id: e.currentTarget.dataset.item_id, type: e.currentTarget.dataset.listing_type, listing_id: e.currentTarget.dataset.listing_id }, function (response) {
+      if (response == "success") {
+        $('#pos_in_list_' + e.currentTarget.dataset.pos).remove();
+        toastr.info('Listing Removed');
+      } else {
+        toastr.error('Failed to remove listing');
+      }
+    });
+  };
+
+  if (e.target.innerText == "Edit") {};
 });
 
 /***/ }),
@@ -11400,10 +11414,38 @@ var notification = new Audio('../audio/beep.mp3');
 
 var user_id = $('#app').data('uid');
 
+if (window.location.pathname == "/offers") {
+  localStorage.newOffers = "false";
+}
+
+if (localStorage.newOffers == "true") {
+  $('#new_offer_icon').append('<i class="fas fa-exclamation-circle"></i></span>');
+}
+
 //Listen for new offer notifications
 window.Echo.private('new_offers_for_' + user_id).listen('NewOfferNotification', function (e) {
   toastr.info('You have recieved a new offer');
+  localStorage.newOffers = "true";
+
+  if ($('#new_offer_icon').html() == "") {
+    $('#new_offer_icon').append('<i class="fas fa-exclamation-circle"></i></span>');
+  }
+
   notification.play();
+});
+
+//Listen for offer messages
+window.Echo.private('new_message_for_user_' + user_id).listen('NewOfferMessage', function (e) {
+  if (e.offer_id != $('#offer_message_offer_id').val()) {
+    toastr.info(e.username + ' sent you a new message (Offer #' + e.offer_id + ')');
+    localStorage.newOffers = "true";
+
+    if ($('#new_offer_icon').html() == "") {
+      $('#new_offer_icon').append('<i class="fas fa-exclamation-circle"></i></span>');
+    }
+
+    notification.play();
+  }
 });
 
 //If a offer is currently open, listen for new messages
@@ -11415,6 +11457,8 @@ if ($('#offer_messages').length) {
     if (e.message == "This Trade has been marked as complete" || e.message == "This Trade has been cancelled") {
       $('#offer_messages').append("<p>" + e.message + "</p>");
       $("#offer_message_send").prop('disabled', true);
+      $("#openCompleteModal").prop('disabled', true);
+      $("#openCancelModal").prop('disabled', true);
       notification.play();
     } else {
       $('#offer_messages').append("<p>" + e.username + ": " + e.message + "</p>");
@@ -11436,6 +11480,66 @@ $('#offer_message_send').on('click', function (e) {
       $('#no_messages_info').remove();
     }
   });
+});
+
+$('#g_chat_send').on('click', function (e) {
+  e.preventDefault();
+  $.post("/send_global_chat_message", $("#global_chat_form").serialize());
+});
+
+//Global Chat
+var global_chat = window.Echo.join('global_chat');
+var user_count = 0;
+var messages = [];
+if (sessionStorage.globalMessages != undefined) {
+  messages = JSON.parse(sessionStorage.globalMessages);
+}
+
+if (sessionStorage.globalChatOpen == undefined) {
+  sessionStorage.globalChatOpen = "false";
+}
+
+if (sessionStorage.globalChatOpen = "true") {
+  $('#global_chat_inner').toggle("fast", "swing");
+}
+
+$('#open_global_chat').on('click', function (e) {
+  $('#global_chat_inner').toggle("fast", "swing");
+});
+
+//When the user joins
+global_chat.here(function (users) {
+  user_count = users.length;
+
+  messages.forEach(function (message) {
+    $('#global_chat_messages').append('<p class="chat_message">(' + new Date(message.time.date) + ') <a href="/profile/' + message.username + '">' + message.username + '</a>: ' + message.message + '</p>');
+  });
+
+  users.forEach(function (user) {
+    $('#global_chat_users').append('<p class="chat_user"><a id="user' + user.id + '" href="/profile/' + user.username + '">' + user.username + '</a></p>');
+    $('#user_count').text(user_count);
+  });
+});
+
+//When another user joins
+global_chat.joining(function (user) {
+  $('#global_chat_users').append('<p class="chat_user"><a id="user' + user.id + '" href="/profile/' + user.username + '">' + user.username + '</a></p>');
+  user_count += 1;
+  $('#user_count').text(user_count);
+});
+
+//When another user leaves
+global_chat.leaving(function (user) {
+  $('#user' + user.id).remove();
+  user_count -= 1;
+  $('#user_count').text(user_count);
+});
+
+//When a new message is recieved
+global_chat.listen('NewGlobalMessage', function (event) {
+  messages.push(event);
+  sessionStorage.globalMessages = JSON.stringify(messages);
+  $('#global_chat_messages').append('<p class="chat_message">(' + new Date(event.time.date) + ') <a href="/profile/' + event.username + '">' + event.username + '</a>: ' + event.message + '</p>');
 });
 
 /***/ }),

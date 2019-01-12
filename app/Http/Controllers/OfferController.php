@@ -10,6 +10,7 @@ use App\Events\NewMessage;
 use App\Events\NewOfferNotification;
 use App\OfferMessage;
 use App\UserReputation;
+use App\Events\NewOfferMessage;
 
 class OfferController extends Controller
 {
@@ -108,6 +109,7 @@ class OfferController extends Controller
     public function sendMessage(Request $request){
       $message = OfferMessage::create([ 'offer_id' => $request->offer_id, 'username' => $request->username, 'message' => $request->message ]);
       NewMessage::dispatch($request->offer_id, $request->username, $request->message);
+      NewOfferMessage::dispatch($request->offer_id, $request->username, $request->message_recipient_id);
     }
 
 
